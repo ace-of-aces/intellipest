@@ -1,0 +1,19 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+use AceOfAces\Intellipest\Commands\HelloCommand;
+use AceOfAces\Intellipest\Commands\IntellipestCommand;
+
+$composerJson = json_decode(file_get_contents(__DIR__ . '/../composer.json'), true);
+$version = $composerJson['version'] ?? '1.0.0';
+
+$app = new Application('Intellipest', $version);
+$app->addCommand(new HelloCommand());
+$app->addCommand(new IntellipestCommand());
+$app->setDefaultCommand('intellipest', true);
+$app->run();
