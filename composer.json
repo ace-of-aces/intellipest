@@ -2,11 +2,24 @@
     "version": "0.1.0",
     "name": "ace-of-aces/intellipest",
     "description": "Generate IDE helpers to assist development with PestPHP",
+    "authors": [
+        {
+            "name": "Julian Schramm",
+            "email": "hi@julian.center"
+        }
+    ],
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "type": "library",
+    "require": {
+        "php": "^8.2",
+        "symfony/console": "^7.4",
+        "nikic/php-parser": "^5.7"
+    },
     "require-dev": {
         "pestphp/pest": "^4.3",
         "laravel/pint": "^1.27"
     },
-    "license": "MIT",
     "autoload": {
         "psr-4": {
             "AceOfAces\\IntelliPest\\": "src/"
@@ -16,18 +29,6 @@
         "psr-4": {
             "Tests\\": "tests/"
         }
-    },
-    "authors": [
-        {
-            "name": "Julian Schramm",
-            "email": "hi@julian.center"
-        }
-    ],
-    "minimum-stability": "stable",
-    "type": "library",
-    "require": {
-        "symfony/console": "^7.4",
-        "nikic/php-parser": "^5.7"
     },
     "bin": [
         "bin/intellipest"
