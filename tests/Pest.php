@@ -39,7 +39,53 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+/*
+|--------------------------------------------------------------------------
+| Test Output Directory
+|--------------------------------------------------------------------------
+|
+| During tests the IntellipestCommand should never write into the real
+| project tree. We set INTELLIPEST_OUTPUT_DIR to a temporary directory
+| so the command's default output path is automatically redirected.
+|
+*/
+
+$intellipestTestOutputDir = sys_get_temp_dir().'/intellipest-test-'.getmypid();
+putenv("INTELLIPEST_OUTPUT_DIR={$intellipestTestOutputDir}");
+
+/**
+ * Return the temporary output directory used by the IntellipestCommand during tests.
+ */
+function testOutputDir(): string
 {
-    // ..
+    return getenv('INTELLIPEST_OUTPUT_DIR');
+}
+
+/**
+ * Return the full path to the temporary IDE helper file written during tests.
+ */
+function testOutputPath(): string
+{
+    return testOutputDir().'/_pest.php';
+}
+
+/**
+ * Recursively remove a directory and all its contents.
+ */
+function cleanDirectory(string $path): void
+{
+    if (! is_dir($path)) {
+        return;
+    }
+
+    $items = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS),
+        RecursiveIteratorIterator::CHILD_FIRST,
+    );
+
+    foreach ($items as $item) {
+        $item->isDir() ? rmdir($item->getPathname()) : unlink($item->getPathname());
+    }
+
+    rmdir($path);
 }

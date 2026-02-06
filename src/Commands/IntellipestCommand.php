@@ -12,6 +12,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class IntellipestCommand extends Command
 {
+    private const DEFAULT_OUTPUT_FILE = '_pest.php';
+
+    private const DEFAULT_OUTPUT_DIR = '.ide-helper';
+
     protected static $defaultName = 'intellipest';
 
     protected function configure(): void
@@ -32,7 +36,6 @@ class IntellipestCommand extends Command
                 'o',
                 InputOption::VALUE_REQUIRED,
                 'Path to write the generated IDE helper file',
-                '.ide-helper/_pest.php'
             );
     }
 
@@ -49,7 +52,7 @@ class IntellipestCommand extends Command
         $intellipest = new Intellipest($configPath);
         $content = $intellipest->generate();
 
-        $outputPath = $input->getOption('output');
+        $outputPath = $input->getOption('output') ?? $this->resolveDefaultOutputPath();
         $directory = dirname($outputPath);
 
         if (! is_dir($directory)) {
@@ -61,5 +64,12 @@ class IntellipestCommand extends Command
         $output->writeln("<info>IDE helper file generated: $outputPath</info>");
 
         return Command::SUCCESS;
+    }
+
+    private function resolveDefaultOutputPath(): string
+    {
+        $outputDir = getenv('INTELLIPEST_OUTPUT_DIR') ?: self::DEFAULT_OUTPUT_DIR;
+
+        return $outputDir.'/'.self::DEFAULT_OUTPUT_FILE;
     }
 }
