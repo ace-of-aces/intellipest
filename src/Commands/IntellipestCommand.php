@@ -42,6 +42,12 @@ class IntellipestCommand extends Command
                 null,
                 InputOption::VALUE_NONE,
                 'Don\'t generate helper methods for built-in expectations in the output file'
+            )
+            ->addOption(
+                'shush',
+                's',
+                InputOption::VALUE_NONE,
+                'Don\'t show the beautiful header and footer in the console output😔'
             );
     }
 
@@ -65,10 +71,27 @@ class IntellipestCommand extends Command
             $color = $gradient[$index];
             $output->writeln("\e[38;5;{$color}m{$line}\e[0m");
         }
+
+        $output->writeln('');
+    }
+
+    protected function displayFooter(OutputInterface $output): void
+    {
+        $output->writeln('');
+        $output->writeln('Made with ❤️  by Julian');
+        $output->writeln('');
+        $output->writeln('> GitHub:  https://github.com/ace-of-aces');
+        $output->writeln('> Twitter: https://x.com/julian_center');
+        $output->writeln('> Website: https://julian.center');
+        $output->writeln('');
     }
 
     protected function interact(InputInterface $input, OutputInterface $output): void
     {
+        if ($input->getOption('shush')) {
+            return;
+        }
+
         $this->displayHeader($output);
     }
 
@@ -109,7 +132,11 @@ class IntellipestCommand extends Command
 
         file_put_contents($outputPath, $content);
 
-        $output->writeln("<info>IDE helper file generated: $outputPath</info>");
+        $output->writeln("<info>✓ Helper file generated: $outputPath</info>");
+
+        if (! $input->getOption('shush')) {
+            $this->displayFooter($output);
+        }
 
         return Command::SUCCESS;
     }

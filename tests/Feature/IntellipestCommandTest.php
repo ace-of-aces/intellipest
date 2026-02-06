@@ -23,7 +23,7 @@ test('intellipest command runs successfully with default config path', function 
     $commandTester->execute([]);
 
     expect($commandTester->getStatusCode())->toBe(0);
-    expect($commandTester->getDisplay())->toContain('IDE helper file generated');
+    expect($commandTester->getDisplay())->toContain('Helper file generated');
     expect(file_exists(testOutputPath()))->toBeTrue();
 })->with('intellipestCommand');
 
@@ -33,7 +33,7 @@ test('intellipest command accepts custom config path via option', function (Comm
     ]);
 
     expect($commandTester->getStatusCode())->toBe(0);
-    expect($commandTester->getDisplay())->toContain('IDE helper file generated');
+    expect($commandTester->getDisplay())->toContain('Helper file generated');
 })->with('intellipestCommand');
 
 test('intellipest command fails when config file does not exist', function (CommandTester $commandTester) {
@@ -53,7 +53,7 @@ test('intellipest command writes to custom output path', function (CommandTester
     ]);
 
     expect($commandTester->getStatusCode())->toBe(0);
-    expect($commandTester->getDisplay())->toContain('IDE helper file generated');
+    expect($commandTester->getDisplay())->toContain('Helper file generated');
     expect(file_exists($outputPath))->toBeTrue();
     expect(file_get_contents($outputPath))->toStartWith('<?php');
 })->with('intellipestCommand');
