@@ -20,6 +20,9 @@ foreach (Fixtures::flat() as $fixture) {
 
         $expected = file_get_contents($resultPath);
 
+        // Normalize line endings for windows compat
+        $generated = str_replace("\r\n", "\n", $generated);
+
         expect($generated)->toBe($expected);
     });
 }
