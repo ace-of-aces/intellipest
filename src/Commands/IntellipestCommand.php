@@ -26,6 +26,13 @@ class IntellipestCommand extends Command
                 InputOption::VALUE_REQUIRED,
                 'Path to the Pest.php configuration file',
                 'tests/Pest.php'
+            )
+            ->addOption(
+                'output',
+                'o',
+                InputOption::VALUE_REQUIRED,
+                'Path to write the generated IDE helper file',
+                '.ide-helper/_pest.php'
             );
     }
 
@@ -40,7 +47,18 @@ class IntellipestCommand extends Command
         }
 
         $intellipest = new Intellipest($configPath);
-        $intellipest->analyze();
+        $content = $intellipest->generate();
+
+        $outputPath = $input->getOption('output');
+        $directory = dirname($outputPath);
+
+        if (! is_dir($directory)) {
+            mkdir($directory, 0755, true);
+        }
+
+        file_put_contents($outputPath, $content);
+
+        $output->writeln("<info>IDE helper file generated: $outputPath</info>");
 
         return Command::SUCCESS;
     }

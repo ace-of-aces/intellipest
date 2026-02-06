@@ -50,7 +50,7 @@ namespace {
 namespace Pest {
 
     /**
-     * @method self toBeOne()
+     * @method self toBeEmail()
      */
     class Expectation {}
 
@@ -59,8 +59,17 @@ namespace Pest {
 namespace Pest\Expectations {
 
     /**
-     * @method self toBeOne()
+     * @method self toBeEmail()
      */
     class OppositeExpectation {}
+
+}
+
+namespace Tests\Fixtures\Stubs {
+
+    class SomeTestCase
+    {
+        use \Tests\Fixtures\Stubs\RefreshDatabaseTrait;
+    }
 
 }
