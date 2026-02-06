@@ -134,3 +134,22 @@ test('intellipest command generates helper file without mixin expectations helpe
     expect(file_exists(testOutputPath()))->toBeTrue();
     expect(file_get_contents(testOutputPath()))->not()->toContain($expectationHelperContent);
 })->with('intellipestCommand');
+
+test('intellipest command displays simple header on narrow terminals', function (CommandTester $commandTester) {
+    putenv('COLUMNS=70');
+
+    $commandTester->execute([]);
+
+    expect($commandTester->getStatusCode())->toBe(0);
+    expect($commandTester->getDisplay())->toContain('IntelliPest');
+    expect($commandTester->getDisplay())->not()->toContain('████████╗');
+})->with('intellipestCommand');
+
+test('intellipest command displays ASCII art header on wide terminals', function (CommandTester $commandTester) {
+    putenv('COLUMNS=100');
+
+    $commandTester->execute([]);
+
+    expect($commandTester->getStatusCode())->toBe(0);
+    expect($commandTester->getDisplay())->toContain('████████╗');
+})->with('intellipestCommand');

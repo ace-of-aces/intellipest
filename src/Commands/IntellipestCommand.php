@@ -9,6 +9,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Terminal;
 
 class IntelliPestCommand extends Command
 {
@@ -54,6 +55,16 @@ class IntelliPestCommand extends Command
     protected function displayHeader(OutputInterface $output): void
     {
         $output->writeln('');
+
+        $terminal = new Terminal;
+        $terminalWidth = $terminal->getWidth();
+
+        if ($terminalWidth < 82) {
+            $output->writeln('<fg=bright-magenta;options=bold>IntelliPest</>');
+            $output->writeln('');
+
+            return;
+        }
 
         $art = [
             '██╗███╗   ██╗████████╗███████╗██╗     ██╗     ██╗██████╗ ███████╗███████╗████████╗',
