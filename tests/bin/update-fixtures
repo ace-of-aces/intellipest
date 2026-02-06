@@ -1,0 +1,53 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+require __DIR__ . '/../../vendor/autoload.php';
+
+use AceOfAces\Intellipest\Intellipest;
+use Tests\Support\Fixtures;
+
+echo "Updating fixture results...\n\n";
+
+$fixtures = Fixtures::flat();
+$updatedCount = 0;
+$errorCount = 0;
+
+foreach ($fixtures as $fixture) {
+    $caseName = $fixture['case'];
+    $configPath = $fixture['configPath'];
+    $resultPath = $fixture['resultPath'];
+    $mixinExpectations = $fixture['mixinExpectations'];
+
+    echo "Processing {$caseName} (mixin expectations: " . ($mixinExpectations ? 'enabled' : 'disabled') . ")...\n";
+
+    try {
+        $intellipest = new Intellipest($configPath, $mixinExpectations);
+        $generated = $intellipest->generate();
+
+        $dir = dirname($resultPath);
+        if (! is_dir($dir)) {
+            mkdir($dir, 0755, true);
+        }
+
+        file_put_contents($resultPath, $generated);
+
+        echo "  ✓ Updated: {$resultPath}\n\n";
+        $updatedCount++;
+    } catch (\Exception $e) {
+        echo "  ✗ Error: {$e->getMessage()}\n\n";
+        $errorCount++;
+    }
+}
+
+echo "--------------------\n";
+echo "Updated: {$updatedCount} fixture(s)\n";
+
+if ($errorCount > 0) {
+    echo "Errors: {$errorCount}\n";
+    exit(1);
+}
+
+echo "Done!\n";
+exit(0);

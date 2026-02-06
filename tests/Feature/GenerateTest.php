@@ -1,93 +1,25 @@
 <?php
 
 use AceOfAces\Intellipest\Intellipest;
+use Tests\Support\Fixtures;
 
-/*
-|--------------------------------------------------------------------------
-| BasicCase: pest()->extend()->in() + expect()->extend()
-|--------------------------------------------------------------------------
-*/
+foreach (Fixtures::flat() as $fixture) {
+    $caseName = $fixture['case'];
+    $configPath = $fixture['configPath'];
+    $resultPath = $fixture['resultPath'];
+    $mixinExpectations = $fixture['mixinExpectations'];
 
-test('generates correct helper file for BasicCase', function () {
-    $intellipest = new Intellipest('tests/Fixtures/BasicCase/Pest.php', false);
-    $generated = $intellipest->generate();
+    $testName = "generates correct helper file for {$caseName}";
+    if ($mixinExpectations) {
+        $testName .= ' with mixin expectations helpers enabled';
+    }
 
-    $expected = file_get_contents('tests/Fixtures/BasicCase/HelperResult.php');
+    test($testName, function () use ($configPath, $resultPath, $mixinExpectations) {
+        $intellipest = new Intellipest($configPath, $mixinExpectations);
+        $generated = $intellipest->generate();
 
-    expect($generated)->toBe($expected);
-});
+        $expected = file_get_contents($resultPath);
 
-/*
-|--------------------------------------------------------------------------
-| BasicCase with mixin expectations helpers enabled
-|--------------------------------------------------------------------------
-*/
-
-test('generates correct helper file for BasicCase with mixin expectations helpers enabled', function () {
-    $intellipest = new Intellipest('tests/Fixtures/BasicCase/Pest.php', true);
-    $generated = $intellipest->generate();
-
-    $expected = file_get_contents('tests/Fixtures/BasicCase/HelperResultWithExpectations.php');
-
-    expect($generated)->toBe($expected);
-});
-
-/*
-|--------------------------------------------------------------------------
-| ComplexCase: multiple pest() chains + multiple expect() extensions
-|--------------------------------------------------------------------------
-*/
-
-test('generates correct helper file for ComplexCase', function () {
-    $intellipest = new Intellipest('tests/Fixtures/ComplexCase/Pest.php', false);
-    $generated = $intellipest->generate();
-
-    $expected = file_get_contents('tests/Fixtures/ComplexCase/HelperResult.php');
-
-    expect($generated)->toBe($expected);
-});
-
-/*
-|--------------------------------------------------------------------------
-| LegacyUsesCase: uses()->in() + expect()->extend()
-|--------------------------------------------------------------------------
-*/
-
-test('generates correct helper file for LegacyUsesCase', function () {
-    $intellipest = new Intellipest('tests/Fixtures/LegacyUsesCase/Pest.php', false);
-    $generated = $intellipest->generate();
-
-    $expected = file_get_contents('tests/Fixtures/LegacyUsesCase/HelperResult.php');
-
-    expect($generated)->toBe($expected);
-});
-
-/*
-|--------------------------------------------------------------------------
-| TraitOnlyCase: pest()->extend() with only a trait and no test class
-|--------------------------------------------------------------------------
-*/
-
-test('generates correct helper file for TraitOnlyCase', function () {
-    $intellipest = new Intellipest('tests/Fixtures/TraitOnlyCase/Pest.php', false);
-    $generated = $intellipest->generate();
-
-    $expected = file_get_contents('tests/Fixtures/TraitOnlyCase/HelperResult.php');
-
-    expect($generated)->toBe($expected);
-});
-
-/*
-|--------------------------------------------------------------------------
-| TraitOnlyCase with mixin expectations helpers enabled
-|--------------------------------------------------------------------------
-*/
-
-test('generates correct helper file for TraitOnlyCase with mixin expectations helpers enabled', function () {
-    $intellipest = new Intellipest('tests/Fixtures/TraitOnlyCase/Pest.php', true);
-    $generated = $intellipest->generate();
-
-    $expected = file_get_contents('tests/Fixtures/TraitOnlyCase/HelperResultWithExpectations.php');
-
-    expect($generated)->toBe($expected);
-});
+        expect($generated)->toBe($expected);
+    });
+}
