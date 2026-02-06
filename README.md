@@ -2,9 +2,9 @@
 
 > Better IDE intelligence for the [PestPHP testing framework](https://pestphp.com/).
 
-- Smart helper file generation for PestPHP 🧠
-- Supports your custom test cases 🫵🏻
-- Pure PHP & framework agnostic 🧩
+- 🧠 Smart helper file generation for PestPHP
+- 🫵🏻 Supports your custom test cases
+- 🧩 Pure PHP & framework agnostic
 
 > [!IMPORTANT]
 > This project is in beta.
@@ -33,7 +33,7 @@ composer require ace-of-aces/intellipest
 
 ![terminal screenshot](./art/screenshot.png)
 
-3. If the command ran successfully, you should be good all set up! You may have to restart your LSP for it to register the helper file.
+3. If the command ran successfully, you should be all set! You may have to restart your LSP for it to register the helper file.
 
 ## Configuration
 
@@ -55,7 +55,7 @@ Specify the path to write the generated IDE helper file. Default: `.ide-helper/_
 Don't generate helper methods for Pest's built-in expectations in the helper file.
 
 > [!NOTE]
-> Some LSPs, like [Intelephense Premium](https://intelephense.com/) support the `@mixin` PHPDoc tag, which is used in Pest's source code, making these helper methods redundant.
+> Some LSPs like [Intelephense Premium](https://intelephense.com/) support the `@mixin` PHPDoc tag, which is used in Pest's source code, making these helper methods redundant for those users.
 
 ### `--shush` / `-s`
 
@@ -67,7 +67,7 @@ Don't output **any** console messages (useful for CI).
 
 ## Compatibility
 
-As of right now, compatibility has only been tested with the popular [Intelephense](https://intelephense.com/) PHP LSP.
+Currently, compatibility has only been tested with the popular [Intelephense](https://intelephense.com/) PHP LSP.
 
 The main requirement for an LSP to benefit from IntelliPest is support for the `@param-closure-this` PHPDoc tag [specified by PHPStan](https://phpstan.org/writing-php-code/phpdocs-basics#callables),
 which enables type hinting the `$this` variable inside of test cases.
