@@ -80,7 +80,21 @@ class IntellipestCommand extends Command
         $content = $intellipest->generate();
 
         $outputPath = $input->getOption('output') ?? $this->resolveDefaultOutputPath();
+
+        if (! str_ends_with($outputPath, '.php')) {
+            $output->writeln("<error>Output file must have a .php extension: $outputPath</error>");
+
+            return Command::FAILURE;
+        }
+
         $directory = dirname($outputPath);
+        $invalidSegment = $this->findBlockingFileInPath($directory);
+
+        if ($invalidSegment !== null) {
+            $output->writeln("<error>Invalid output path – '$invalidSegment' is not a directory</error>");
+
+            return Command::FAILURE;
+        }
 
         if (! is_dir($directory)) {
             mkdir($directory, 0755, true);
@@ -98,5 +112,24 @@ class IntellipestCommand extends Command
         $outputDir = getenv('INTELLIPEST_OUTPUT_DIR') ?: self::DEFAULT_OUTPUT_DIR;
 
         return $outputDir.'/'.self::DEFAULT_OUTPUT_FILE;
+    }
+
+    private function findBlockingFileInPath(string $directory): ?string
+    {
+        $path = $directory;
+
+        while ($path !== '' && $path !== '.' && $path !== '/') {
+            if (is_file($path)) {
+                return $path;
+            }
+
+            if (is_dir($path)) {
+                return null;
+            }
+
+            $path = dirname($path);
+        }
+
+        return null;
     }
 }

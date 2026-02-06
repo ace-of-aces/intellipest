@@ -68,3 +68,44 @@ test('intellipest command creates output directory if it does not exist', functi
     expect(is_dir(dirname($outputPath)))->toBeTrue();
     expect(file_exists($outputPath))->toBeTrue();
 })->with('intellipestCommand');
+
+test('intellipest command fails when output file does not end with .php', function (CommandTester $commandTester) {
+    $outputPath = testOutputDir().'/helper.txt';
+
+    $commandTester->execute([
+        '--output' => $outputPath,
+    ]);
+
+    expect($commandTester->getStatusCode())->toBe(1);
+    expect($commandTester->getDisplay())->toContain('Output file must have a .php extension');
+})->with('intellipestCommand');
+
+test('intellipest command fails when output file has no extension', function (CommandTester $commandTester) {
+    $outputPath = testOutputDir().'/helper';
+
+    $commandTester->execute([
+        '--output' => $outputPath,
+    ]);
+
+    expect($commandTester->getStatusCode())->toBe(1);
+    expect($commandTester->getDisplay())->toContain('Output file must have a .php extension');
+})->with('intellipestCommand');
+
+test('intellipest command fails when parent path contains an existing file', function (CommandTester $commandTester) {
+    $blockerFile = testOutputDir().'/blockerfile';
+
+    if (! is_dir(testOutputDir())) {
+        mkdir(testOutputDir(), 0755, true);
+    }
+
+    file_put_contents($blockerFile, 'blocked');
+
+    $outputPath = $blockerFile.'/nested.php';
+
+    $commandTester->execute([
+        '--output' => $outputPath,
+    ]);
+
+    expect($commandTester->getStatusCode())->toBe(1);
+    expect($commandTester->getDisplay())->toContain('is not a directory');
+})->with('intellipestCommand');
