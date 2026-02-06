@@ -1,8 +1,3 @@
-    use Pest\Concerns\Expectable;
-    use Pest\PendingCalls\BeforeEachCall;
-    use Pest\PendingCalls\TestCall;
-    use Pest\Support\HigherOrderTapProxy;
-
     /**
      * Runs the given closure before all tests in the current file.
      *
@@ -15,9 +10,9 @@
      *
      * @param-closure-this {{ unionType }}  $closure
      *
-     * @return HigherOrderTapProxy<Expectable|TestCall|{{ unionType }}>|Expectable|TestCall|{{ unionType }}|mixed
+     * @return \Pest\Support\HigherOrderTapProxy<\Pest\Concerns\Expectable|\Pest\PendingCalls\TestCall|{{ unionType }}|mixed
      */
-    function beforeEach(?Closure $closure = null): BeforeEachCall {}
+    function beforeEach(?Closure $closure = null): \Pest\PendingCalls\BeforeEachCall {}
 
     /**
      * Adds the given closure as a test. The first argument
@@ -26,9 +21,9 @@
      *
      * @param-closure-this {{ unionType }}  $closure
      *
-     * @return Expectable|TestCall|{{ unionType }}|mixed
+     * @return \Pest\Concerns\Expectable|\Pest\PendingCalls\TestCall|{{ unionType }}|mixed
      */
-    function test(?string $description = null, ?Closure $closure = null): HigherOrderTapProxy|TestCall {}
+    function test(?string $description = null, ?Closure $closure = null): \Pest\Support\HigherOrderTapProxy|\Pest\PendingCalls\TestCall {}
 
     /**
      * Adds the given closure as a test. The first argument
@@ -37,6 +32,6 @@
      *
      * @param-closure-this {{ unionType }}  $closure
      *
-     * @return Expectable|TestCall|{{ unionType }}|mixed
+     * @return \Pest\Concerns\Expectable|\Pest\PendingCalls\TestCall|{{ unionType }}|mixed
      */
-    function it(string $description, ?Closure $closure = null): TestCall {}
+    function it(string $description, ?Closure $closure = null): \Pest\PendingCalls\TestCall {}

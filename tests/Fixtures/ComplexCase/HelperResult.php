@@ -2,11 +2,6 @@
 
 namespace {
 
-    use Pest\Concerns\Expectable;
-    use Pest\PendingCalls\BeforeEachCall;
-    use Pest\PendingCalls\TestCall;
-    use Pest\Support\HigherOrderTapProxy;
-
     /**
      * Runs the given closure before all tests in the current file.
      *
@@ -19,9 +14,9 @@ namespace {
      *
      * @param-closure-this \Tests\Fixtures\Stubs\SomeTestCase|\Tests\Fixtures\Stubs\DuskTestCase  $closure
      *
-     * @return HigherOrderTapProxy<Expectable|TestCall|\Tests\Fixtures\Stubs\SomeTestCase|\Tests\Fixtures\Stubs\DuskTestCase>|Expectable|TestCall|\Tests\Fixtures\Stubs\SomeTestCase|\Tests\Fixtures\Stubs\DuskTestCase|mixed
+     * @return \Pest\Support\HigherOrderTapProxy<\Pest\Concerns\Expectable|\Pest\PendingCalls\TestCall|\Tests\Fixtures\Stubs\SomeTestCase|\Tests\Fixtures\Stubs\DuskTestCase|mixed
      */
-    function beforeEach(?Closure $closure = null): BeforeEachCall {}
+    function beforeEach(?Closure $closure = null): \Pest\PendingCalls\BeforeEachCall {}
 
     /**
      * Adds the given closure as a test. The first argument
@@ -30,9 +25,9 @@ namespace {
      *
      * @param-closure-this \Tests\Fixtures\Stubs\SomeTestCase|\Tests\Fixtures\Stubs\DuskTestCase  $closure
      *
-     * @return Expectable|TestCall|\Tests\Fixtures\Stubs\SomeTestCase|\Tests\Fixtures\Stubs\DuskTestCase|mixed
+     * @return \Pest\Concerns\Expectable|\Pest\PendingCalls\TestCall|\Tests\Fixtures\Stubs\SomeTestCase|\Tests\Fixtures\Stubs\DuskTestCase|mixed
      */
-    function test(?string $description = null, ?Closure $closure = null): HigherOrderTapProxy|TestCall {}
+    function test(?string $description = null, ?Closure $closure = null): \Pest\Support\HigherOrderTapProxy|\Pest\PendingCalls\TestCall {}
 
     /**
      * Adds the given closure as a test. The first argument
@@ -41,9 +36,9 @@ namespace {
      *
      * @param-closure-this \Tests\Fixtures\Stubs\SomeTestCase|\Tests\Fixtures\Stubs\DuskTestCase  $closure
      *
-     * @return Expectable|TestCall|\Tests\Fixtures\Stubs\SomeTestCase|\Tests\Fixtures\Stubs\DuskTestCase|mixed
+     * @return \Pest\Concerns\Expectable|\Pest\PendingCalls\TestCall|\Tests\Fixtures\Stubs\SomeTestCase|\Tests\Fixtures\Stubs\DuskTestCase|mixed
      */
-    function it(string $description, ?Closure $closure = null): TestCall {}
+    function it(string $description, ?Closure $closure = null): \Pest\PendingCalls\TestCall {}
 
 }
 
