@@ -12,7 +12,7 @@
     "minimum-stability": "stable",
     "type": "library",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "symfony/console": "^7.4",
         "nikic/php-parser": "^5.7"
     },
