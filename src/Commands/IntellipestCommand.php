@@ -78,7 +78,7 @@ class IntelliPestCommand extends Command
     protected function displayFooter(OutputInterface $output): void
     {
         $output->writeln('');
-        $output->writeln('Made with ❤️  by Julian');
+        $output->writeln('Made with ❤️  by Julian Schramm');
         $output->writeln('');
         $output->writeln('> GitHub:  https://github.com/ace-of-aces');
         $output->writeln('> Twitter: https://x.com/julian_center');
