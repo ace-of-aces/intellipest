@@ -11,8 +11,9 @@
 
 ## Introduction
 
-IntelliPest assists your IDE or coding agent to better understand your Pest tests.
-It generates a helper file, which enables full autocompletion and error checking for [compatible language servers / IDEs](#compatibility).
+IntelliPest is a CLI tool that generates a helper file based on your own Pest setup.
+
+This assists your IDE or coding agent to better understand your tests, enabling full autocompletion and error checking for [compatible language servers](#compatibility).
 
 ## Quick Start
 
