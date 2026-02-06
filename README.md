@@ -31,6 +31,8 @@ composer require ace-of-aces/intellipest
 ./vendor/bin/intellipest
 ```
 
+![terminal screenshot](./art/screenshot.png)
+
 3. If the command ran successfully, you should be good all set up! You may have to restart your LSP for it to register the helper file.
 
 ## Configuration
