@@ -61,3 +61,33 @@ test('generates correct helper file for LegacyUsesCase', function () {
 
     expect($generated)->toBe($expected);
 });
+
+/*
+|--------------------------------------------------------------------------
+| TraitOnlyCase: pest()->extend() with only a trait and no test class
+|--------------------------------------------------------------------------
+*/
+
+test('generates correct helper file for TraitOnlyCase', function () {
+    $intellipest = new Intellipest('tests/Fixtures/TraitOnlyCase/Pest.php', false);
+    $generated = $intellipest->generate();
+
+    $expected = file_get_contents('tests/Fixtures/TraitOnlyCase/HelperResult.php');
+
+    expect($generated)->toBe($expected);
+});
+
+/*
+|--------------------------------------------------------------------------
+| TraitOnlyCase with mixin expectations helpers enabled
+|--------------------------------------------------------------------------
+*/
+
+test('generates correct helper file for TraitOnlyCase with mixin expectations helpers enabled', function () {
+    $intellipest = new Intellipest('tests/Fixtures/TraitOnlyCase/Pest.php', true);
+    $generated = $intellipest->generate();
+
+    $expected = file_get_contents('tests/Fixtures/TraitOnlyCase/HelperResultWithExpectations.php');
+
+    expect($generated)->toBe($expected);
+});

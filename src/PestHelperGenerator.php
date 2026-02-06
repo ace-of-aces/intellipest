@@ -39,8 +39,8 @@ final class PestHelperGenerator
             $sections[] = "namespace {\n\n".$this->generateGlobalFunctions($testCaseClasses)."\n\n}";
         }
 
-        // Expectation classes (only if expectations exist)
-        if (count($config->expectations) > 0) {
+        // Expectation classes (if expectations exist or mixin expectations are enabled)
+        if (count($config->expectations) > 0 || $this->generateMixinExpectations) {
             $sections[] = "namespace Pest {\n\n".$this->generateExpectationClass($config->expectations)."\n\n}";
             $sections[] = "namespace Pest\\Expectations {\n\n".$this->generateExpectationClass($config->expectations, true)."\n\n}";
         }
@@ -100,9 +100,11 @@ final class PestHelperGenerator
         $className = $opposite ? 'OppositeExpectation' : 'Expectation';
 
         $lines = [];
-        $lines[] = '    /**';
-        $lines = array_merge($lines, $methodLines);
-        $lines[] = '     */';
+        if (count($expectations) > 0) {
+            $lines[] = '    /**';
+            $lines = array_merge($lines, $methodLines);
+            $lines[] = '     */';
+        }
         if ($this->generateMixinExpectations) {
             $lines[] = "    class {$className} {";
             $lines[] = Stub::render(dirname(__DIR__).'/stubs/mixin_expectations.stub');
