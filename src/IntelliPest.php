@@ -14,12 +14,14 @@ use PhpParser\ParserFactory;
 
 final class IntelliPest
 {
+    private PestConfigVisitor $visitor;
+
     public function __construct(
         public string $configPath = 'tests/Pest.php',
         public bool $generateMixinExpectations = true
     ) {}
 
-    public function analyze(): PestConfigVisitor
+    public function analyze(): void
     {
         $code = file_get_contents($this->configPath);
         $parser = (new ParserFactory)->createForHostVersion();
@@ -29,7 +31,8 @@ final class IntelliPest
         } catch (\Error $error) {
             echo "Parse error: {$error->getMessage()}\n";
 
-            return new PestConfigVisitor;
+            $this->visitor = new PestConfigVisitor;
+            return;
         }
 
         $visitor = new PestConfigVisitor;
@@ -39,7 +42,8 @@ final class IntelliPest
         $traverser->addVisitor($visitor);
         $traverser->traverse($ast);
 
-        return $visitor;
+        $this->visitor = $visitor;
+        return;
     }
 
     /**
@@ -47,8 +51,7 @@ final class IntelliPest
      */
     public function generate(): string
     {
-        $visitor = $this->analyze();
-        $config = $this->buildConfig($visitor);
+        $config = $this->buildConfig($this->visitor);
 
         return (new PestHelperGenerator($this->generateMixinExpectations))->generate($config);
     }
