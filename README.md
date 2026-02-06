@@ -45,14 +45,14 @@ Specify the path to the `Pest.php` configuration file. Default: `tests/Pest.php`
 
 Specify the path to write the generated IDE helper file. Default: `.ide-helper/_pest.php`.
 
-> [!INFO]
+> [!NOTE]
 > You may also set the output directory via the `INTELLIPEST_OUTPUT_DIR` environment variable.
 
 ### `--no-expectation-helpers`
 
 Don't generate helper methods for Pest's built-in expectations in the helper file.
 
-> [!INFO]
+> [!NOTE]
 > Some LSPs, like [Intelephense Premium](https://intelephense.com/) support the `@mixin` PHPDoc tag, which is used in Pest's source code, making these helper methods redundant.
 
 ### `--shush` / `-s`
@@ -70,7 +70,7 @@ As of right now, compatibility has only been tested with the popular [Intelephen
 The main requirement for an LSP to benefit from IntelliPest is support for the `@param-closure-this` PHPDoc tag [specified by PHPStan](https://phpstan.org/writing-php-code/phpdocs-basics#callables),
 which enables type hinting the `$this` variable inside of test cases.
 
-> [!INFO]
+> [!NOTE]
 > For PHPStorm users, we recommend just using the first-party [Pest plugin](https://plugins.jetbrains.com/plugin/14636-pest) by JetBrains.
 
 ## Contributing
