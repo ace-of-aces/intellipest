@@ -15,7 +15,8 @@ use PhpParser\ParserFactory;
 final class Intellipest
 {
     public function __construct(
-        public string $configPath = 'tests/Pest.php'
+        public string $configPath = 'tests/Pest.php',
+        public bool $generateMixinExpectations = true
     ) {}
 
     public function analyze(): PestConfigVisitor
@@ -49,7 +50,7 @@ final class Intellipest
         $visitor = $this->analyze();
         $config = $this->buildConfig($visitor);
 
-        return (new PestHelperGenerator)->generate($config);
+        return (new PestHelperGenerator($this->generateMixinExpectations))->generate($config);
     }
 
     /**

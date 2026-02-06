@@ -19,6 +19,10 @@ use AceOfAces\Intellipest\Support\Stub;
  */
 final class PestHelperGenerator
 {
+    public function __construct(
+        protected bool $generateMixinExpectations = true
+    ) {}
+
     public function generate(PestConfig $config): string
     {
         $sections = [];
@@ -99,7 +103,13 @@ final class PestHelperGenerator
         $lines[] = '    /**';
         $lines = array_merge($lines, $methodLines);
         $lines[] = '     */';
-        $lines[] = "    class {$className} {}";
+        if ($this->generateMixinExpectations) {
+            $lines[] = "    class {$className} {";
+            $lines[] = Stub::render(dirname(__DIR__).'/stubs/mixin_expectations.stub');
+            $lines[] = '    }';
+        } else {
+            $lines[] = "    class {$className} {}";
+        }
 
         return implode("\n", $lines);
     }

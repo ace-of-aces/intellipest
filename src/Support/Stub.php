@@ -11,12 +11,16 @@ final class Stub
      *
      * @param  array<string, string>  $replacements
      */
-    public static function render(string $stubPath, array $replacements): string
+    public static function render(string $stubPath, ?array $replacements = null): string
     {
         $content = file_get_contents($stubPath);
 
         if ($content === false) {
             throw new \RuntimeException("Stub file not found: {$stubPath}");
+        }
+
+        if ($replacements === null) {
+            return $content;
         }
 
         foreach ($replacements as $key => $value) {

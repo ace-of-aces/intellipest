@@ -36,6 +36,12 @@ class IntellipestCommand extends Command
                 'o',
                 InputOption::VALUE_REQUIRED,
                 'Path to write the generated IDE helper file',
+            )
+            ->addOption(
+                'no-expectation-helpers',
+                null,
+                InputOption::VALUE_NONE,
+                'Don\'t generate helper methods for built-in expectations in the output file'
             );
     }
 
@@ -69,6 +75,7 @@ class IntellipestCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $configPath = $input->getOption('config');
+        $generateMixinExpectations = ! (bool) $input->getOption('no-expectation-helpers');
 
         if (! file_exists($configPath)) {
             $output->writeln("<error>Config file not found: $configPath</error>");
@@ -76,7 +83,7 @@ class IntellipestCommand extends Command
             return Command::FAILURE;
         }
 
-        $intellipest = new Intellipest($configPath);
+        $intellipest = new Intellipest($configPath, $generateMixinExpectations);
         $content = $intellipest->generate();
 
         $outputPath = $input->getOption('output') ?? $this->resolveDefaultOutputPath();

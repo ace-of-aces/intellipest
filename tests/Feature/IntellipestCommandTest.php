@@ -1,6 +1,7 @@
 <?php
 
 use AceOfAces\Intellipest\Commands\IntellipestCommand;
+use AceOfAces\Intellipest\Support\Stub;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
@@ -108,4 +109,28 @@ test('intellipest command fails when parent path contains an existing file', fun
 
     expect($commandTester->getStatusCode())->toBe(1);
     expect($commandTester->getDisplay())->toContain('is not a directory');
+})->with('intellipestCommand');
+
+test('intellipest command generates helper file with mixin expectations helpers by default', function (CommandTester $commandTester) {
+    $commandTester->execute([
+        '--no-expectation-helpers' => false,
+    ]);
+
+    $expectationHelperContent = Stub::render(dirname(__DIR__).'/../stubs/mixin_expectations.stub');
+
+    expect($commandTester->getStatusCode())->toBe(0);
+    expect(file_exists(testOutputPath()))->toBeTrue();
+    expect(file_get_contents(testOutputPath()))->toContain($expectationHelperContent);
+})->with('intellipestCommand');
+
+test('intellipest command generates helper file without mixin expectations helpers when --no-expectation-helpers option is used', function (CommandTester $commandTester) {
+    $commandTester->execute([
+        '--no-expectation-helpers' => true,
+    ]);
+
+    $expectationHelperContent = Stub::render(dirname(__DIR__).'/../stubs/mixin_expectations.stub');
+
+    expect($commandTester->getStatusCode())->toBe(0);
+    expect(file_exists(testOutputPath()))->toBeTrue();
+    expect(file_get_contents(testOutputPath()))->not()->toContain($expectationHelperContent);
 })->with('intellipestCommand');

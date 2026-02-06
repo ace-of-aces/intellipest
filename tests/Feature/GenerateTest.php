@@ -9,10 +9,25 @@ use AceOfAces\Intellipest\Intellipest;
 */
 
 test('generates correct helper file for BasicCase', function () {
-    $intellipest = new Intellipest('tests/Fixtures/BasicCase/Pest.php');
+    $intellipest = new Intellipest('tests/Fixtures/BasicCase/Pest.php', false);
     $generated = $intellipest->generate();
 
     $expected = file_get_contents('tests/Fixtures/BasicCase/HelperResult.php');
+
+    expect($generated)->toBe($expected);
+});
+
+/*
+|--------------------------------------------------------------------------
+| BasicCase with mixin expectations helpers enabled
+|--------------------------------------------------------------------------
+*/
+
+test('generates correct helper file for BasicCase with mixin expectations helpers enabled', function () {
+    $intellipest = new Intellipest('tests/Fixtures/BasicCase/Pest.php', true);
+    $generated = $intellipest->generate();
+
+    $expected = file_get_contents('tests/Fixtures/BasicCase/HelperResultWithExpectations.php');
 
     expect($generated)->toBe($expected);
 });
@@ -24,7 +39,7 @@ test('generates correct helper file for BasicCase', function () {
 */
 
 test('generates correct helper file for ComplexCase', function () {
-    $intellipest = new Intellipest('tests/Fixtures/ComplexCase/Pest.php');
+    $intellipest = new Intellipest('tests/Fixtures/ComplexCase/Pest.php', false);
     $generated = $intellipest->generate();
 
     $expected = file_get_contents('tests/Fixtures/ComplexCase/HelperResult.php');
@@ -39,7 +54,7 @@ test('generates correct helper file for ComplexCase', function () {
 */
 
 test('generates correct helper file for LegacyUsesCase', function () {
-    $intellipest = new Intellipest('tests/Fixtures/LegacyUsesCase/Pest.php');
+    $intellipest = new Intellipest('tests/Fixtures/LegacyUsesCase/Pest.php', false);
     $generated = $intellipest->generate();
 
     $expected = file_get_contents('tests/Fixtures/LegacyUsesCase/HelperResult.php');
