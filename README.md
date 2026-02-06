@@ -67,7 +67,7 @@ Don't output **any** console messages (useful for CI).
 
 As of right now, compatibility has only been tested with the popular [Intelephense](https://intelephense.com/) PHP LSP.
 
-The main requirement for an LSP to benefit from Intellipest is support for the `@param-closure-this` PHPDoc tag [specified by PHPStan](https://phpstan.org/writing-php-code/phpdocs-basics#callables),
+The main requirement for an LSP to benefit from IntelliPest is support for the `@param-closure-this` PHPDoc tag [specified by PHPStan](https://phpstan.org/writing-php-code/phpdocs-basics#callables),
 which enables type hinting the `$this` variable inside of test cases.
 
 > [!INFO]
