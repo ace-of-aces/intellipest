@@ -6,6 +6,7 @@ namespace AceOfAces\Intellipest;
 
 use AceOfAces\Intellipest\Data\PestConfig;
 use AceOfAces\Intellipest\Data\TestCaseExtension;
+use AceOfAces\Intellipest\Support\Stub;
 
 /**
  * Generates IDE helper file content from a parsed PestConfig.
@@ -74,61 +75,10 @@ final class PestHelperGenerator
     {
         $unionType = implode('|', $testCaseClasses);
 
-        $lines = [];
-
-        // Use statements
-        $lines[] = '    use Pest\Concerns\Expectable;';
-        $lines[] = '    use Pest\PendingCalls\BeforeEachCall;';
-        $lines[] = '    use Pest\PendingCalls\TestCall;';
-        $lines[] = '    use Pest\Support\HigherOrderTapProxy;';
-        $lines[] = '';
-
-        // beforeAll
-        $lines[] = '    /**';
-        $lines[] = '     * Runs the given closure before all tests in the current file.';
-        $lines[] = '     *';
-        $lines[] = "     * @param-closure-this {$unionType}  \$closure";
-        $lines[] = '     */';
-        $lines[] = '    function beforeAll(Closure $closure): void {}';
-        $lines[] = '';
-
-        // beforeEach
-        $lines[] = '    /**';
-        $lines[] = '     * Runs the given closure before each test in the current file.';
-        $lines[] = '     *';
-        $lines[] = "     * @param-closure-this {$unionType}  \$closure";
-        $lines[] = '     *';
-        $lines[] = "     * @return HigherOrderTapProxy<Expectable|TestCall|{$unionType}>|Expectable|TestCall|{$unionType}|mixed";
-        $lines[] = '     */';
-        $lines[] = '    function beforeEach(?Closure $closure = null): BeforeEachCall {}';
-        $lines[] = '';
-
-        // test
-        $lines[] = '    /**';
-        $lines[] = '     * Adds the given closure as a test. The first argument';
-        $lines[] = '     * is the test description; the second argument is';
-        $lines[] = '     * a closure that contains the test expectations.';
-        $lines[] = '     *';
-        $lines[] = "     * @param-closure-this {$unionType}  \$closure";
-        $lines[] = '     *';
-        $lines[] = "     * @return Expectable|TestCall|{$unionType}|mixed";
-        $lines[] = '     */';
-        $lines[] = '    function test(?string $description = null, ?Closure $closure = null): HigherOrderTapProxy|TestCall {}';
-        $lines[] = '';
-
-        // it
-        $lines[] = '    /**';
-        $lines[] = '     * Adds the given closure as a test. The first argument';
-        $lines[] = '     * is the test description; the second argument is';
-        $lines[] = '     * a closure that contains the test expectations.';
-        $lines[] = '     *';
-        $lines[] = "     * @param-closure-this {$unionType}  \$closure";
-        $lines[] = '     *';
-        $lines[] = "     * @return Expectable|TestCall|{$unionType}|mixed";
-        $lines[] = '     */';
-        $lines[] = '    function it(string $description, ?Closure $closure = null): TestCall {}';
-
-        return implode("\n", $lines);
+        return Stub::render(
+            dirname(__DIR__).'/stubs/global_functions.stub',
+            ['unionType' => $unionType],
+        );
     }
 
     /**

@@ -1,0 +1,42 @@
+    use Pest\Concerns\Expectable;
+    use Pest\PendingCalls\BeforeEachCall;
+    use Pest\PendingCalls\TestCall;
+    use Pest\Support\HigherOrderTapProxy;
+
+    /**
+     * Runs the given closure before all tests in the current file.
+     *
+     * @param-closure-this {{ unionType }}  $closure
+     */
+    function beforeAll(Closure $closure): void {}
+
+    /**
+     * Runs the given closure before each test in the current file.
+     *
+     * @param-closure-this {{ unionType }}  $closure
+     *
+     * @return HigherOrderTapProxy<Expectable|TestCall|{{ unionType }}>|Expectable|TestCall|{{ unionType }}|mixed
+     */
+    function beforeEach(?Closure $closure = null): BeforeEachCall {}
+
+    /**
+     * Adds the given closure as a test. The first argument
+     * is the test description; the second argument is
+     * a closure that contains the test expectations.
+     *
+     * @param-closure-this {{ unionType }}  $closure
+     *
+     * @return Expectable|TestCall|{{ unionType }}|mixed
+     */
+    function test(?string $description = null, ?Closure $closure = null): HigherOrderTapProxy|TestCall {}
+
+    /**
+     * Adds the given closure as a test. The first argument
+     * is the test description; the second argument is
+     * a closure that contains the test expectations.
+     *
+     * @param-closure-this {{ unionType }}  $closure
+     *
+     * @return Expectable|TestCall|{{ unionType }}|mixed
+     */
+    function it(string $description, ?Closure $closure = null): TestCall {}
