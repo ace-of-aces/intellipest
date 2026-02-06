@@ -15,9 +15,9 @@ use AceOfAces\IntelliPest\IntelliPest;
 
 test('analyze parses pest() call chain from BasicCase fixture', function () {
     $intellipest = new IntelliPest('tests/Fixtures/BasicCase/Pest.php');
-    $visitor = $intellipest->analyze();
+    $intellipest->analyze();
 
-    $pestCalls = $visitor->getPestCalls();
+    $pestCalls = $intellipest->visitor->getPestCalls();
 
     expect($pestCalls)->toHaveCount(1);
     expect($pestCalls[0])->toBeInstanceOf(PestCall::class);
@@ -30,9 +30,9 @@ test('analyze parses pest() call chain from BasicCase fixture', function () {
 
 test('analyze parses expect() call chain from BasicCase fixture', function () {
     $intellipest = new IntelliPest('tests/Fixtures/BasicCase/Pest.php');
-    $visitor = $intellipest->analyze();
+    $intellipest->analyze();
 
-    $expectCalls = $visitor->getExpectCalls();
+    $expectCalls = $intellipest->visitor->getExpectCalls();
 
     expect($expectCalls)->toHaveCount(1);
     expect($expectCalls[0])->toBeInstanceOf(ExpectCall::class);
@@ -41,9 +41,9 @@ test('analyze parses expect() call chain from BasicCase fixture', function () {
 
 test('analyze produces no uses() calls from BasicCase fixture', function () {
     $intellipest = new IntelliPest('tests/Fixtures/BasicCase/Pest.php');
-    $visitor = $intellipest->analyze();
+    $intellipest->analyze();
 
-    expect($visitor->getUsesCalls())->toHaveCount(0);
+    expect($intellipest->visitor->getUsesCalls())->toHaveCount(0);
 });
 
 /*
@@ -54,9 +54,9 @@ test('analyze produces no uses() calls from BasicCase fixture', function () {
 
 test('analyze parses legacy uses() call chain', function () {
     $intellipest = new IntelliPest('tests/Fixtures/LegacyUsesCase/Pest.php');
-    $visitor = $intellipest->analyze();
+    $intellipest->analyze();
 
-    $usesCalls = $visitor->getUsesCalls();
+    $usesCalls = $intellipest->visitor->getUsesCalls();
 
     expect($usesCalls)->toHaveCount(1);
     expect($usesCalls[0])->toBeInstanceOf(UsesCall::class);
@@ -73,9 +73,9 @@ test('analyze parses legacy uses() call chain', function () {
 
 test('analyze parses expect() from LegacyUsesCase fixture', function () {
     $intellipest = new IntelliPest('tests/Fixtures/LegacyUsesCase/Pest.php');
-    $visitor = $intellipest->analyze();
+    $intellipest->analyze();
 
-    $expectCalls = $visitor->getExpectCalls();
+    $expectCalls = $intellipest->visitor->getExpectCalls();
 
     expect($expectCalls)->toHaveCount(1);
     expect($expectCalls[0]->name)->toBe('toBeEmail');
@@ -83,9 +83,9 @@ test('analyze parses expect() from LegacyUsesCase fixture', function () {
 
 test('analyze produces no pest() calls from LegacyUsesCase fixture', function () {
     $intellipest = new IntelliPest('tests/Fixtures/LegacyUsesCase/Pest.php');
-    $visitor = $intellipest->analyze();
+    $intellipest->analyze();
 
-    expect($visitor->getPestCalls())->toHaveCount(0);
+    expect($intellipest->visitor->getPestCalls())->toHaveCount(0);
 });
 
 /*
@@ -96,9 +96,9 @@ test('analyze produces no pest() calls from LegacyUsesCase fixture', function ()
 
 test('analyze parses multiple pest() call chains', function () {
     $intellipest = new IntelliPest('tests/Fixtures/ComplexCase/Pest.php');
-    $visitor = $intellipest->analyze();
+    $intellipest->analyze();
 
-    $pestCalls = $visitor->getPestCalls();
+    $pestCalls = $intellipest->visitor->getPestCalls();
 
     expect($pestCalls)->toHaveCount(2);
 
@@ -121,9 +121,9 @@ test('analyze parses multiple pest() call chains', function () {
 
 test('analyze parses multiple expect() extensions', function () {
     $intellipest = new IntelliPest('tests/Fixtures/ComplexCase/Pest.php');
-    $visitor = $intellipest->analyze();
+    $intellipest->analyze();
 
-    $expectCalls = $visitor->getExpectCalls();
+    $expectCalls = $intellipest->visitor->getExpectCalls();
 
     expect($expectCalls)->toHaveCount(2);
     expect($expectCalls[0]->name)->toBe('toBePositive');

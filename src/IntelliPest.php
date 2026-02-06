@@ -14,7 +14,7 @@ use PhpParser\ParserFactory;
 
 final class IntelliPest
 {
-    private PestConfigVisitor $visitor;
+    public PestConfigVisitor $visitor;
 
     public function __construct(
         public string $configPath = 'tests/Pest.php',
@@ -51,7 +51,7 @@ final class IntelliPest
      */
     public function generate(): string
     {
-        $config = $this->buildConfig($this->visitor);
+        $config = $this->buildConfig();
 
         return (new PestHelperGenerator($this->generateMixinExpectations))->generate($config);
     }
@@ -64,18 +64,18 @@ final class IntelliPest
      * accumulate into the current extension. Traits without an associated class
      * become defaultTestCaseTraits.
      */
-    public function buildConfig(PestConfigVisitor $visitor): PestConfig
+    public function buildConfig(): PestConfig
     {
         $expectations = array_map(
             fn ($call) => $call->name,
-            $visitor->getExpectCalls(),
+            $this->visitor->getExpectCalls(),
         );
 
         $testCaseExtensions = [];
         $defaultTestCaseTraits = [];
 
         // Process both pest() and uses() calls identically
-        $allCalls = array_merge($visitor->getPestCalls(), $visitor->getUsesCalls());
+        $allCalls = array_merge($this->visitor->getPestCalls(), $this->visitor->getUsesCalls());
 
         foreach ($allCalls as $call) {
             $pendingTestCase = null;

@@ -16,6 +16,7 @@ foreach (Fixtures::flat() as $fixture) {
 
     test($testName, function () use ($configPath, $resultPath, $mixinExpectations) {
         $intellipest = new IntelliPest($configPath, $mixinExpectations);
+        $intellipest->analyze();
         $generated = $intellipest->generate();
 
         $expected = file_get_contents($resultPath);
