@@ -10,16 +10,16 @@ namespace {
     /**
      * Runs the given closure before all tests in the current file.
      *
-     * @param-closure-this \Tests\TestCase  $closure
+     * @param-closure-this \Tests\Fixtures\Stubs\SomeTestCase  $closure
      */
     function beforeAll(Closure $closure): void {}
 
     /**
      * Runs the given closure before each test in the current file.
      *
-     * @param-closure-this \Tests\TestCase  $closure
+     * @param-closure-this \Tests\Fixtures\Stubs\SomeTestCase  $closure
      *
-     * @return HigherOrderTapProxy<Expectable|TestCall|\Tests\TestCase>|Expectable|TestCall|\Tests\TestCase|mixed
+     * @return HigherOrderTapProxy<Expectable|TestCall|\Tests\Fixtures\Stubs\SomeTestCase>|Expectable|TestCall|\Tests\Fixtures\Stubs\SomeTestCase|mixed
      */
     function beforeEach(?Closure $closure = null): BeforeEachCall {}
 
@@ -28,9 +28,9 @@ namespace {
      * is the test description; the second argument is
      * a closure that contains the test expectations.
      *
-     * @param-closure-this \Tests\TestCase  $closure
+     * @param-closure-this \Tests\Fixtures\Stubs\SomeTestCase  $closure
      *
-     * @return Expectable|TestCall|\Tests\TestCase|mixed
+     * @return Expectable|TestCall|\Tests\Fixtures\Stubs\SomeTestCase|mixed
      */
     function test(?string $description = null, ?Closure $closure = null): HigherOrderTapProxy|TestCall {}
 
@@ -39,9 +39,9 @@ namespace {
      * is the test description; the second argument is
      * a closure that contains the test expectations.
      *
-     * @param-closure-this \Tests\TestCase  $closure
+     * @param-closure-this \Tests\Fixtures\Stubs\SomeTestCase  $closure
      *
-     * @return Expectable|TestCall|\Tests\TestCase|mixed
+     * @return Expectable|TestCall|\Tests\Fixtures\Stubs\SomeTestCase|mixed
      */
     function it(string $description, ?Closure $closure = null): TestCall {}
 

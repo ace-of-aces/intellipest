@@ -9,6 +9,7 @@ dataset('intellipestCommand', [
         $application = new Application;
         $application->addCommand(new IntellipestCommand);
         $command = $application->find('intellipest');
+
         return new CommandTester($command);
     },
 ]);
