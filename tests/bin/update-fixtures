@@ -5,7 +5,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/../../vendor/autoload.php';
 
-use AceOfAces\Intellipest\Intellipest;
+use AceOfAces\IntelliPest\IntelliPest;
 use Tests\Support\Fixtures;
 
 echo "Updating fixture results...\n\n";
@@ -23,7 +23,7 @@ foreach ($fixtures as $fixture) {
     echo "Processing {$caseName} (mixin expectations: " . ($mixinExpectations ? 'enabled' : 'disabled') . ")...\n";
 
     try {
-        $intellipest = new Intellipest($configPath, $mixinExpectations);
+        $intellipest = new IntelliPest($configPath, $mixinExpectations);
         $generated = $intellipest->generate();
 
         $dir = dirname($resultPath);

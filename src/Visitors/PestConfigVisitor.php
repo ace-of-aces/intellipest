@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace AceOfAces\Intellipest\Visitors;
+namespace AceOfAces\IntelliPest\Visitors;
 
-use AceOfAces\Intellipest\Data\ClassLikeReference;
-use AceOfAces\Intellipest\Data\ExpectCall;
-use AceOfAces\Intellipest\Data\PestCall;
-use AceOfAces\Intellipest\Data\UsesCall;
-use AceOfAces\Intellipest\Support\ClassLikeResolver;
+use AceOfAces\IntelliPest\Data\ClassLikeReference;
+use AceOfAces\IntelliPest\Data\ExpectCall;
+use AceOfAces\IntelliPest\Data\PestCall;
+use AceOfAces\IntelliPest\Data\UsesCall;
+use AceOfAces\IntelliPest\Support\ClassLikeResolver;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\ClassConstFetch;

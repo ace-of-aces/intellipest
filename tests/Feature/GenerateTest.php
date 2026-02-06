@@ -1,6 +1,6 @@
 <?php
 
-use AceOfAces\Intellipest\Intellipest;
+use AceOfAces\IntelliPest\IntelliPest;
 use Tests\Support\Fixtures;
 
 foreach (Fixtures::flat() as $fixture) {
@@ -15,7 +15,7 @@ foreach (Fixtures::flat() as $fixture) {
     }
 
     test($testName, function () use ($configPath, $resultPath, $mixinExpectations) {
-        $intellipest = new Intellipest($configPath, $mixinExpectations);
+        $intellipest = new IntelliPest($configPath, $mixinExpectations);
         $generated = $intellipest->generate();
 
         $expected = file_get_contents($resultPath);

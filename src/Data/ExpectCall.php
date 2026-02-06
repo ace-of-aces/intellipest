@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AceOfAces\Intellipest\Data;
+namespace AceOfAces\IntelliPest\Data;
 
 /**
  * Represents an expect()->extend('name', fn) call chain.

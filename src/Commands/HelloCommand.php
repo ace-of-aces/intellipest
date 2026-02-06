@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AceOfAces\Intellipest\Commands;
+namespace AceOfAces\IntelliPest\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -37,7 +37,7 @@ class HelloCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $name = $input->getArgument('name');
-        $message = "Hello, $name! Welcome to Intellipest.";
+        $message = "Hello, $name! Welcome to IntelliPest.";
 
         if ($input->getOption('uppercase')) {
             $message = strtoupper($message);

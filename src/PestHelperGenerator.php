@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace AceOfAces\Intellipest;
+namespace AceOfAces\IntelliPest;
 
-use AceOfAces\Intellipest\Data\PestConfig;
-use AceOfAces\Intellipest\Data\TestCaseExtension;
-use AceOfAces\Intellipest\Support\Stub;
+use AceOfAces\IntelliPest\Data\PestConfig;
+use AceOfAces\IntelliPest\Data\TestCaseExtension;
+use AceOfAces\IntelliPest\Support\Stub;
 
 /**
  * Generates IDE helper file content from a parsed PestConfig.

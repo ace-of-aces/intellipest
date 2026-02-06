@@ -44,7 +44,7 @@ expect()->extend('toBeOne', function () {
 | Test Output Directory
 |--------------------------------------------------------------------------
 |
-| During tests the IntellipestCommand should never write into the real
+| During tests the IntelliPestCommand should never write into the real
 | project tree. We set INTELLIPEST_OUTPUT_DIR to a temporary directory
 | so the command's default output path is automatically redirected.
 |
@@ -54,7 +54,7 @@ $intellipestTestOutputDir = sys_get_temp_dir().'/intellipest-test-'.getmypid();
 putenv("INTELLIPEST_OUTPUT_DIR={$intellipestTestOutputDir}");
 
 /**
- * Return the temporary output directory used by the IntellipestCommand during tests.
+ * Return the temporary output directory used by the IntelliPestCommand during tests.
  */
 function testOutputDir(): string
 {

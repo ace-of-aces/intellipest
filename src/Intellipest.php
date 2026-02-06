@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace AceOfAces\Intellipest;
+namespace AceOfAces\IntelliPest;
 
-use AceOfAces\Intellipest\Data\ClassLikeType;
-use AceOfAces\Intellipest\Data\PestConfig;
-use AceOfAces\Intellipest\Data\TestCaseExtension;
-use AceOfAces\Intellipest\Visitors\PestConfigVisitor;
+use AceOfAces\IntelliPest\Data\ClassLikeType;
+use AceOfAces\IntelliPest\Data\PestConfig;
+use AceOfAces\IntelliPest\Data\TestCaseExtension;
+use AceOfAces\IntelliPest\Visitors\PestConfigVisitor;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\ParserFactory;
 
-final class Intellipest
+final class IntelliPest
 {
     public function __construct(
         public string $configPath = 'tests/Pest.php',

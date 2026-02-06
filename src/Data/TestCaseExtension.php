@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AceOfAces\Intellipest\Data;
+namespace AceOfAces\IntelliPest\Data;
 
 /**
  * Represents a test case class with its associated traits and optional directory scope.

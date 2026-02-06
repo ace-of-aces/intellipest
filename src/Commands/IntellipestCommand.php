@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace AceOfAces\Intellipest\Commands;
+namespace AceOfAces\IntelliPest\Commands;
 
-use AceOfAces\Intellipest\Intellipest;
+use AceOfAces\IntelliPest\IntelliPest;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class IntellipestCommand extends Command
+class IntelliPestCommand extends Command
 {
     private const DEFAULT_OUTPUT_FILE = '_pest.php';
 
@@ -106,7 +106,7 @@ class IntellipestCommand extends Command
             return Command::FAILURE;
         }
 
-        $intellipest = new Intellipest($configPath, $generateMixinExpectations);
+        $intellipest = new IntelliPest($configPath, $generateMixinExpectations);
         $content = $intellipest->generate();
 
         $outputPath = $input->getOption('output') ?? $this->resolveDefaultOutputPath();

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AceOfAces\Intellipest\Data;
+namespace AceOfAces\IntelliPest\Data;
 
 /**
  * Aggregate configuration extracted from a Pest.php file.

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AceOfAces\Intellipest\Support;
+namespace AceOfAces\IntelliPest\Support;
 
-use AceOfAces\Intellipest\Data\ClassLikeType;
+use AceOfAces\IntelliPest\Data\ClassLikeType;
 
 final class ClassLikeResolver
 {

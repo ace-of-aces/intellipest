@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AceOfAces\Intellipest\Support;
+namespace AceOfAces\IntelliPest\Support;
 
 final class Stub
 {

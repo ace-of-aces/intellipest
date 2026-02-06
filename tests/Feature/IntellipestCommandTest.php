@@ -1,14 +1,14 @@
 <?php
 
-use AceOfAces\Intellipest\Commands\IntellipestCommand;
-use AceOfAces\Intellipest\Support\Stub;
+use AceOfAces\IntelliPest\Commands\IntelliPestCommand;
+use AceOfAces\IntelliPest\Support\Stub;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 dataset('intellipestCommand', [
     'commandTester' => function () {
         $application = new Application;
-        $application->addCommand(new IntellipestCommand);
+        $application->addCommand(new IntelliPestCommand);
         $command = $application->find('intellipest');
 
         return new CommandTester($command);
