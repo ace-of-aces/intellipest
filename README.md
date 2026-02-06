@@ -1,6 +1,6 @@
 # IntelliPest
 
-> Better IDE intelligence for PestPHP.
+> Better IDE intelligence for the [PestPHP testing framework](https://pestphp.com/).
 
 - Smart helper file generation for PestPHP 🧠
 - Supports your custom test cases 🫵🏻
