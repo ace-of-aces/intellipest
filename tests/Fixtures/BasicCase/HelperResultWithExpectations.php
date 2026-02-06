@@ -52,8 +52,8 @@ namespace Pest {
     /**
      * @method self toBeOne()
      */
-    class Expectation {
-
+    class Expectation
+    {
         /**
          * Asserts that two variables have the same type and
          * value. Used on objects, it asserts that two
@@ -548,7 +548,6 @@ namespace Pest {
          * @return self<TValue>
          */
         public function toBeSlug(string $message = ''): self {}
-
     }
 
 }
@@ -558,8 +557,8 @@ namespace Pest\Expectations {
     /**
      * @method self toBeOne()
      */
-    class OppositeExpectation {
-
+    class OppositeExpectation
+    {
         /**
          * Asserts that two variables have the same type and
          * value. Used on objects, it asserts that two
@@ -1054,7 +1053,6 @@ namespace Pest\Expectations {
          * @return self<TValue>
          */
         public function toBeSlug(string $message = ''): self {}
-
     }
 
 }

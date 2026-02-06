@@ -106,7 +106,8 @@ final class PestHelperGenerator
             $lines[] = '     */';
         }
         if ($this->generateMixinExpectations) {
-            $lines[] = "    class {$className} {";
+            $lines[] = "    class {$className}";
+            $lines[] = '    {';
             $lines[] = Stub::render(dirname(__DIR__).'/stubs/mixin_expectations.stub');
             $lines[] = '    }';
         } else {
