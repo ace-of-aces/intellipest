@@ -13,7 +13,6 @@ $composerJson = json_decode(file_get_contents(__DIR__ . '/../composer.json'), tr
 $version = $composerJson['version'] ?? '1.0.0';
 
 $app = new Application('IntelliPest', $version);
-$app->addCommand(new HelloCommand());
 $app->addCommand(new IntelliPestCommand());
 $app->setDefaultCommand('intellipest', true);
 $app->run();
