@@ -39,6 +39,33 @@ class IntellipestCommand extends Command
             );
     }
 
+    protected function displayHeader(OutputInterface $output): void
+    {
+        $output->writeln('');
+
+        $art = [
+            '██╗███╗   ██╗████████╗███████╗██╗     ██╗     ██╗██████╗ ███████╗███████╗████████╗',
+            '██║████╗  ██║╚══██╔══╝██╔════╝██║     ██║     ██║██╔══██╗██╔════╝██╔════╝╚══██╔══╝',
+            '██║██╔██╗ ██║   ██║   █████╗  ██║     ██║     ██║██████╔╝█████╗  ███████╗   ██║   ',
+            '██║██║╚██╗██║   ██║   ██╔══╝  ██║     ██║     ██║██╔═══╝ ██╔══╝  ╚════██║   ██║   ',
+            '██║██║ ╚████║   ██║   ███████╗███████╗███████╗██║██║     ███████╗███████║   ██║   ',
+            '╚═╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚══════╝╚══════╝╚═╝╚═╝     ╚══════╝╚══════╝   ╚═╝   ',
+        ];
+
+        // Vaporwave gradient (from the Laravel installer❤️)
+        $gradient = [213, 177, 141, 105, 69, 39];
+
+        foreach ($art as $index => $line) {
+            $color = $gradient[$index];
+            $output->writeln("\e[38;5;{$color}m{$line}\e[0m");
+        }
+    }
+
+    protected function interact(InputInterface $input, OutputInterface $output): void
+    {
+        $this->displayHeader($output);
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $configPath = $input->getOption('config');
