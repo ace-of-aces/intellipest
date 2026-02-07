@@ -17,7 +17,7 @@ class IntelliPestCommand extends Command
 
     private const DEFAULT_OUTPUT_DIR = '.intellipest';
 
-    protected static $defaultName = 'intellipest';
+    protected static string $defaultName = 'intellipest';
 
     protected function configure(): void
     {
