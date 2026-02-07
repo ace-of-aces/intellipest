@@ -7,7 +7,7 @@
 - 🧩 Pure PHP & framework agnostic
 
 > [!IMPORTANT]
-> This project is in beta.
+> This project is currently in beta. Features are subject to change.
 
 ## Introduction
 
