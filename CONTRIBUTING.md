@@ -25,6 +25,13 @@ Clone your fork, then install the dev dependencies:
 composer install
 ```
 
+### Code Quality Tests
+
+To run all of the below checks with one command, run:
+```bash
+composer test:all
+```
+
 ### Formatting
 
 Format your code:
@@ -34,7 +41,14 @@ composer format
 
 ### Tests
 
-Run tests:
+Run the test suite:
 ```bash
 composer test
+```
+
+### Static Analysis
+
+Run PHPStan:
+```bash
+composer analyze
 ```
