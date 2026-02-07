@@ -1,12 +1,13 @@
 <div align="center">
-<h1>IntelliPest</h1>
+<img src="art/screenshot-header.png" alt="IntelliPest Header">
+<hr>
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/ace-of-aces/intellipest.svg?style=flat-square)](https://packagist.org/packages/ace-of-aces/intellipest)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/ace-of-aces/intellipest/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/ace-of-aces/intellipest/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/ace-of-aces/intellipest/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/ace-of-aces/intellipest/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/ace-of-aces/intellipest.svg?style=flat-square)](https://packagist.org/packages/ace-of-aces/intellipest)
 
-<p>Better IDE intelligence for the <a href="https://pestphp.com/">PestPHP testing framework</a>.</p>
+<p>IntelliPest - Better IDE intelligence for the <a href="https://pestphp.com/">PestPHP testing framework</a>.</p>
 </div>
 
 ## Features
@@ -52,7 +53,7 @@ composer require --dev ace-of-aces/intellipest
 ./vendor/bin/intellipest
 ```
 
-![terminal screenshot](./art/screenshot.png)
+![terminal screenshot](./art/screenshot-console.png)
 
 3. If the command ran successfully, you should be all set! You may have to restart your LSP for it to register the helper file.
 
