@@ -66,7 +66,7 @@ function testOutputDir(): string
  */
 function testOutputPath(): string
 {
-    return testOutputDir().'/_pest.php';
+    return testOutputDir().'/_pest-helper.php';
 }
 
 /**

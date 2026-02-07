@@ -46,7 +46,7 @@ test('intellipest command fails when config file does not exist', function (Comm
 })->with('intellipestCommand');
 
 test('intellipest command writes to custom output path', function (CommandTester $commandTester) {
-    $outputPath = testOutputDir().'/custom/_pest.php';
+    $outputPath = testOutputDir().'/custom/_my-pest-helper.php';
 
     $commandTester->execute([
         '--output' => $outputPath,
@@ -59,7 +59,7 @@ test('intellipest command writes to custom output path', function (CommandTester
 })->with('intellipestCommand');
 
 test('intellipest command creates output directory if it does not exist', function (CommandTester $commandTester) {
-    $outputPath = testOutputDir().'/nested/deep/_pest.php';
+    $outputPath = testOutputDir().'/nested/deep/_pest-helper.php';
 
     $commandTester->execute([
         '--output' => $outputPath,

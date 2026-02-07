@@ -13,9 +13,9 @@ use Symfony\Component\Console\Terminal;
 
 class IntelliPestCommand extends Command
 {
-    private const DEFAULT_OUTPUT_FILE = '_pest.php';
+    private const DEFAULT_OUTPUT_FILE = '_pest-helper.php';
 
-    private const DEFAULT_OUTPUT_DIR = '.ide-helper';
+    private const DEFAULT_OUTPUT_DIR = '.intellipest';
 
     protected static $defaultName = 'intellipest';
 

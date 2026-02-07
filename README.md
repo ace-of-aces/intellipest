@@ -55,7 +55,7 @@ Specify the path to the `Pest.php` configuration file. Default: `tests/Pest.php`
 
 ### `--output` / `-o`
 
-Specify the path to write the generated IDE helper file. Default: `.ide-helper/_pest.php`.
+Specify the path to write the generated IDE helper file. Default: `.intellipest/_pest-helper.php`.
 
 > [!NOTE]
 > You may also set the output directory via the `INTELLIPEST_OUTPUT_DIR` environment variable.
