@@ -20,10 +20,19 @@ This assists your IDE or coding agent to better understand your tests, enabling 
 For standard Pest setups with the `Pest.php` configuration file located in `./tests/Pest.php`, you can follow these steps.
 If your `Pest.php` is located somewhere else, see the [configuration section](#configuration) below.
 
+### Prerequisites
+
+Make sure your project meets the following requirements:
+
+- PHP 8.3+
+- Pest 4.x
+
+### Setup
+
 1. Install the package via composer:
 
 ```bash
-composer require ace-of-aces/intellipest
+composer require --dev ace-of-aces/intellipest
 ```
 
 2. Run this command to generate the helper file:
@@ -66,7 +75,19 @@ Don't show the (beautiful) header and footer in the console output 😔
 
 Don't output **any** console messages (useful for CI).
 
+## Under The Hood
+
+IntelliPest leverages the [nikic/PHP-Parser](https://github.com/nikic/PHP-Parser) package in order to parse your `Pest.php` as an AST (Abstract Syntax Tree).
+
+This enables it to extract call chains to Pest's configuration API (namely `pest()`, `uses()`, `expect()`).
+
+Based on these function calls and the arguments you pass to them (mainly TestCase classes and Traits), IntelliPest maps those to an internal data structure.
+
+As a final step, IntelliPest takes all of this analyzed data and generates a PHP helper file with the help of templates.
+
 ## Compatibility
+
+### LSP compatibility
 
 Currently, compatibility has only been tested with the popular [Intelephense](https://intelephense.com/) PHP LSP.
 
@@ -75,6 +96,13 @@ which enables type hinting the `$this` variable inside of test cases.
 
 > [!NOTE]
 > For PHPStorm users, we recommend just using the first-party [Pest plugin](https://plugins.jetbrains.com/plugin/14636-pest) by JetBrains.
+
+### Pest Version compatiblity
+
+Exact API compatibility for minor Pest versions has not been thoroughly tested as of right now. This may improve in future releases.
+
+> [!IMPORTANT]
+> IntelliPest currently only supports projects using Pest 4.x
 
 ## Contributing
 
