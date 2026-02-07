@@ -3,16 +3,27 @@
 
 declare(strict_types=1);
 
-require __DIR__ . '/../vendor/autoload.php';
-
-use Symfony\Component\Console\Application;
-use AceOfAces\IntelliPest\Commands\HelloCommand;
 use AceOfAces\IntelliPest\Commands\IntelliPestCommand;
+use Symfony\Component\Console\Application;
 
-$composerJson = json_decode(file_get_contents(__DIR__ . '/../composer.json'), true);
+// Used when IntelliPest is required using composer.
+$vendorPath = dirname(__DIR__, 4).'/vendor/autoload.php';
+
+// Used when developing IntelliPest.
+$localPath = dirname(__DIR__).'/vendor/autoload.php';
+
+if (file_exists($vendorPath)) {
+    include_once $vendorPath;
+    $autoloadPath = $vendorPath;
+} else {
+    include_once $localPath;
+    $autoloadPath = $localPath;
+}
+
+$composerJson = json_decode(file_get_contents(__DIR__.'/../composer.json'), true);
 $version = $composerJson['version'] ?? '1.0.0';
 
 $app = new Application('IntelliPest', $version);
-$app->addCommand(new IntelliPestCommand());
+$app->addCommand(new IntelliPestCommand);
 $app->setDefaultCommand('intellipest', true);
 $app->run();
