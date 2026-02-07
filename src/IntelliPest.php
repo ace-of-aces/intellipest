@@ -34,11 +34,11 @@ final class IntelliPest
         try {
             $ast = $parser->parse($code);
         } catch (\Error $error) {
-            echo "Parse error: {$error->getMessage()}\n";
+            throw new \RuntimeException("Failed to parse config file: {$error->getMessage()}");
+        }
 
-            $this->visitor = new PestConfigVisitor;
-
-            return;
+        if ($ast === null) {
+            throw new \RuntimeException("Parsed AST doesn't contain any nodes.");
         }
 
         $visitor = new PestConfigVisitor;
