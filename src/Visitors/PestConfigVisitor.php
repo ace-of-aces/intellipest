@@ -81,13 +81,11 @@ final class PestConfigVisitor extends NodeVisitorAbstract
      * Given: pest()->extend(X)->use(Y)->in('Feature')
      * AST:   MethodCall(MethodCall(MethodCall(FuncCall('pest'), 'extend', [X]), 'use', [Y]), 'in', ['Feature'])
      *
-     * Returns: ['pest', [], [{name: 'extend', args: [X]}, {name: 'use', args: [Y]}, {name: 'in', args: ['Feature']}]]
-     *
-     * @return array{string, Arg[], list<array{name: string, args: Arg[]}>}|null
+     * @return array{string, list<Arg|\PhpParser\Node\VariadicPlaceholder>, list<array{name: string, args: list<Arg|\PhpParser\Node\VariadicPlaceholder>}>}|null
      */
     private function unwindChain(Node\Expr $expr): ?array
     {
-        /** @var list<array{name: string, args: Arg[]}> $methods */
+        /** @var list<array{name: string, args: list<Arg|\PhpParser\Node\VariadicPlaceholder>}> $methods */
         $methods = [];
         $current = $expr;
 
@@ -102,7 +100,7 @@ final class PestConfigVisitor extends NodeVisitorAbstract
             // Prepend: we're walking from outermost to innermost, so we reverse order.
             array_unshift($methods, [
                 'name' => $methodName->name,
-                'args' => $current->args,
+                'args' => array_values($current->args),
             ]);
 
             $current = $current->var;
@@ -123,7 +121,7 @@ final class PestConfigVisitor extends NodeVisitorAbstract
             return null;
         }
 
-        return [$rootName, $current->args, $methods];
+        return [$rootName, array_values($current->args), $methods];
     }
 
     /**
@@ -132,7 +130,7 @@ final class PestConfigVisitor extends NodeVisitorAbstract
      * All extension methods (extend, extends, use, uses) are treated identically
      * since they are all aliases in Pest's Configuration class.
      *
-     * @param  list<array{name: string, args: Arg[]}>  $methods
+     * @param  list<array{name: string, args: list<Arg|\PhpParser\Node\VariadicPlaceholder>}>  $methods
      */
     private function processPestChain(array $methods): void
     {
@@ -161,7 +159,7 @@ final class PestConfigVisitor extends NodeVisitorAbstract
      *
      * Recognized methods: extend
      *
-     * @param  list<array{name: string, args: Arg[]}>  $methods
+     * @param  list<array{name: string, args: list<Arg|\PhpParser\Node\VariadicPlaceholder>}>  $methods
      */
     private function processExpectChain(array $methods): void
     {
@@ -181,8 +179,8 @@ final class PestConfigVisitor extends NodeVisitorAbstract
      * The root uses() call contains class-like arguments directly.
      * Additional chained extension methods (extend, use, etc.) are also collected.
      *
-     * @param  list<Arg>  $rootArgs
-     * @param  list<array{name: string, args: Arg[]}>  $methods
+     * @param  list<Arg|\PhpParser\Node\VariadicPlaceholder>  $rootArgs
+     * @param  list<array{name: string, args: list<Arg|\PhpParser\Node\VariadicPlaceholder>}>  $methods
      */
     private function processUsesChain(array $rootArgs, array $methods): void
     {
@@ -209,7 +207,7 @@ final class PestConfigVisitor extends NodeVisitorAbstract
     /**
      * Extract all class-like arguments and resolve each to a ClassLikeReference.
      *
-     * @param  list<Arg>  $args
+     * @param  list<Arg|\PhpParser\Node\VariadicPlaceholder>  $args
      * @return list<ClassLikeReference>
      */
     private function resolveClassArgs(array $args): array
@@ -217,6 +215,10 @@ final class PestConfigVisitor extends NodeVisitorAbstract
         $references = [];
 
         foreach ($args as $arg) {
+            if (! $arg instanceof Arg) {
+                continue;
+            }
+
             $fqcn = $this->resolveClassConstFetch($arg);
             if ($fqcn !== null) {
                 $references[] = new ClassLikeReference(
@@ -254,7 +256,7 @@ final class PestConfigVisitor extends NodeVisitorAbstract
     /**
      * Extract the first string literal argument from an argument list.
      *
-     * @param  list<Arg>  $args
+     * @param  list<Arg|\PhpParser\Node\VariadicPlaceholder>  $args
      */
     private function extractStringArg(array $args): ?string
     {
@@ -262,7 +264,13 @@ final class PestConfigVisitor extends NodeVisitorAbstract
             return null;
         }
 
-        $value = $args[0]->value;
+        $firstArg = $args[0];
+
+        if (! $firstArg instanceof Arg) {
+            return null;
+        }
+
+        $value = $firstArg->value;
 
         if (! $value instanceof String_) {
             return null;

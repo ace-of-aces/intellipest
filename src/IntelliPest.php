@@ -24,6 +24,11 @@ final class IntelliPest
     public function analyze(): void
     {
         $code = file_get_contents($this->configPath);
+
+        if ($code === false) {
+            throw new \RuntimeException("Failed to read config file at {$this->configPath}");
+        }
+
         $parser = (new ParserFactory)->createForHostVersion();
 
         try {
@@ -32,6 +37,7 @@ final class IntelliPest
             echo "Parse error: {$error->getMessage()}\n";
 
             $this->visitor = new PestConfigVisitor;
+
             return;
         }
 
@@ -43,7 +49,7 @@ final class IntelliPest
         $traverser->traverse($ast);
 
         $this->visitor = $visitor;
-        return;
+
     }
 
     /**
