@@ -40,9 +40,15 @@
         }
     },
     "scripts": {
-        "lint": "pint --test",
-        "format": "pint --fix",
+        "lint": "pint --test --parallel",
+        "format": "pint --parallel",
         "test": "pest",
+        "analyze": "phpstan analyze",
+        "test:all": [
+            "@lint",
+            "@test",
+            "@analyze"
+        ],
         "test:update-fixtures": "./tests/bin/update-fixtures"
     }
 }
