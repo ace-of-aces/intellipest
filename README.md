@@ -155,6 +155,14 @@ Whether it's reporting or fixing bugs, contributing new features, or enhancing t
 
 [→ Submit a Pull Request](https://github.com/ace-of-aces/intellipest/pulls)
 
+## Credits
+
+- [Nikita Popov](https://github.com/nikic), creator of PHP-Parser
+- [Ondrej Mirtes](https://github.com/ondrejmirtes), creator of PHPStan
+- [Nuno Maduro](https://github.com/nunomaduro), creator of Pest
+- [Ben Mewburn](https://github.com/bmewburn), creator of Intelephense
+- [Pushpak Chhajed](https://github.com/pushpak1300) for the console ASCII art inspiration
+
 ## License
 
 Made with ❤️ under the [MIT License](LICENSE.md)
