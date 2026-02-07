@@ -1,6 +1,15 @@
-# IntelliPest
+<div align="center">
+<h1>IntelliPest</h1>
 
-> Better IDE intelligence for the [PestPHP testing framework](https://pestphp.com/).
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/ace-of-aces/intellipest.svg?style=flat-square)](https://packagist.org/packages/ace-of-aces/intellipest)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/ace-of-aces/intellipest/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/ace-of-aces/intellipest/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/ace-of-aces/intellipest/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/ace-of-aces/intellipest/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/ace-of-aces/intellipest.svg?style=flat-square)](https://packagist.org/packages/ace-of-aces/intellipest)
+
+<p>Better IDE intelligence for the <a href="https://pestphp.com/">PestPHP testing framework</a>.</p>
+</div>
+
+## Features
 
 - 🧠 Smart helper file generation for PestPHP
 - 🫵🏻 Supports your custom test cases
