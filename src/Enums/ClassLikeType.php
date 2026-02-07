@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AceOfAces\IntelliPest\Data;
+namespace AceOfAces\IntelliPest\Enums;
 
 enum ClassLikeType: string
 {

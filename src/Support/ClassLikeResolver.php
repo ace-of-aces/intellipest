@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AceOfAces\IntelliPest\Support;
 
-use AceOfAces\IntelliPest\Data\ClassLikeType;
+use AceOfAces\IntelliPest\Enums\ClassLikeType;
 
 final class ClassLikeResolver
 {

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace AceOfAces\IntelliPest;
 
-use AceOfAces\IntelliPest\Data\ClassLikeType;
 use AceOfAces\IntelliPest\Data\PestConfig;
 use AceOfAces\IntelliPest\Data\TestCaseExtension;
+use AceOfAces\IntelliPest\Enums\ClassLikeType;
 use AceOfAces\IntelliPest\Visitors\PestConfigVisitor;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NameResolver;

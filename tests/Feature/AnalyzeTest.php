@@ -1,10 +1,10 @@
 <?php
 
 use AceOfAces\IntelliPest\Data\ClassLikeReference;
-use AceOfAces\IntelliPest\Data\ClassLikeType;
 use AceOfAces\IntelliPest\Data\ExpectCall;
 use AceOfAces\IntelliPest\Data\PestCall;
 use AceOfAces\IntelliPest\Data\UsesCall;
+use AceOfAces\IntelliPest\Enums\ClassLikeType;
 use AceOfAces\IntelliPest\IntelliPest;
 
 /*
