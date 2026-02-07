@@ -112,7 +112,7 @@ class IntelliPestCommand extends Command
         $generateMixinExpectations = ! (bool) $input->getOption('no-expectation-helpers');
 
         if (! file_exists($configPath)) {
-            $output->writeln("<error>⨯ Config file not found: $configPath</error>");
+            $output->writeln("<error>✗ Config file not found: $configPath</error>");
 
             return Command::FAILURE;
         }
@@ -120,7 +120,7 @@ class IntelliPestCommand extends Command
         $outputPath = $input->getOption('output') ?? $this->resolveDefaultOutputPath();
 
         if (! str_ends_with($outputPath, '.php')) {
-            $output->writeln("<error>⨯ Output file must have a .php extension: $outputPath</error>");
+            $output->writeln("<error>✗ Output file must have a .php extension: $outputPath</error>");
 
             return Command::FAILURE;
         }
@@ -129,7 +129,7 @@ class IntelliPestCommand extends Command
         $invalidSegment = $this->findBlockingFileInPath($directory);
 
         if ($invalidSegment !== null) {
-            $output->writeln("<error>⨯ Invalid output path – '$invalidSegment' is not a directory</error>");
+            $output->writeln("<error>✗ Invalid output path – '$invalidSegment' is not a directory</error>");
 
             return Command::FAILURE;
         }
