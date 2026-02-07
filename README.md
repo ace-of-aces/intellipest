@@ -9,6 +9,8 @@
 > [!IMPORTANT]
 > This project is currently in beta. Features are subject to change.
 
+---
+
 ## Introduction
 
 IntelliPest is a CLI tool that generates a helper file based on your own Pest setup.
@@ -75,16 +77,6 @@ Don't show the (beautiful) header and footer in the console output 😔
 
 Don't output **any** console messages (useful for CI).
 
-## Under The Hood
-
-IntelliPest leverages the [nikic/PHP-Parser](https://github.com/nikic/PHP-Parser) package in order to parse your `Pest.php` as an AST (Abstract Syntax Tree).
-
-This enables it to extract call chains to Pest's configuration API (namely `pest()`, `uses()`, `expect()`).
-
-Based on these function calls and the arguments you pass to them (mainly TestCase classes and Traits), IntelliPest maps those to an internal data structure.
-
-As a final step, IntelliPest takes all of this analyzed data and generates a PHP helper file with the help of templates.
-
 ## Compatibility
 
 ### LSP compatibility
@@ -103,6 +95,46 @@ Exact API compatibility for minor Pest versions has not been thoroughly tested a
 
 > [!IMPORTANT]
 > IntelliPest currently only supports projects using Pest 4.x
+
+## Known Limitations
+
+IntelliPest is currently unable to accurately reflect the dynamic Test class association of the `$this` variable in test cases determined by the `->in(...)` method in configuration call chains.
+
+### Concrete Example
+
+For a `Pest.php` configuration with different TestCase classes for the `Feature` and `Unit` folders, like this:
+
+```php
+pest()->extends(Tests\TestCase::class)
+    ->extend(Illuminate\Foundation\Testing\RefreshDatabase::class)
+    ->in('Feature');
+
+pest()->extend(Tests\UnitTestCase::class)
+    ->in('Unit');
+```
+
+The resulting type hint in all test cases will **always** be a union of both TestCase classes, regardless of whether the test is located in `Feature` or `Unit`:
+
+![$this type hint screenshot](./art/screenshot-type-hint.png)
+
+> [!IMPORTANT]
+> It's important to be aware of this while writing tests, as suggestions from both TestCase classes will appear on the `$this` variable inside of tests, even though they _might_ not be available (possibly resulting in a runtime exception when called from the wrong context).
+
+### Technical Details
+
+This is due to IntelliPest's helper file approach only being able to override the `@param-closure-this` PHPDoc tag for [Pest's global testing function declarations](https://pestphp.com/docs/writing-tests).
+
+## Under The Hood
+
+IntelliPest leverages the [nikic/PHP-Parser](https://github.com/nikic/PHP-Parser) package in order to parse your `Pest.php` as an AST (Abstract Syntax Tree).
+
+This enables it to extract call chains to Pest's configuration API (namely `pest()`, `uses()`, `expect()`).
+
+Based on these function calls and the arguments you pass to them (mainly TestCase classes and Traits), IntelliPest maps those to an internal data structure.
+
+As a final step, IntelliPest takes all of this analyzed data and generates a PHP helper file with the help of templates.
+
+---
 
 ## Contributing
 
