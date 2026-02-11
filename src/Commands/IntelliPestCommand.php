@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AceOfAces\IntelliPest\Commands;
 
 use AceOfAces\IntelliPest\IntelliPest;
+use React\EventLoop\Loop;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -17,7 +18,21 @@ class IntelliPestCommand extends Command
 
     private const DEFAULT_OUTPUT_DIR = '.intellipest';
 
+    private const WATCH_INTERVAL_SECONDS = 0.5;
+
     protected static string $defaultName = 'intellipest';
+
+    private int $lastModificationTime = 0;
+
+    private string $configPath;
+
+    private string $outputPath;
+
+    private bool $shush;
+
+    private bool $watch;
+
+    private bool $generateMixinExpectations;
 
     protected function configure(): void
     {
@@ -49,6 +64,12 @@ class IntelliPestCommand extends Command
                 's',
                 InputOption::VALUE_NONE,
                 'Don\'t show the beautiful header and footer in the console output😔'
+            )
+            ->addOption(
+                'watch',
+                'w',
+                InputOption::VALUE_NONE,
+                'Watch the input configuration file and regenerate on changes'
             );
     }
 
@@ -108,24 +129,39 @@ class IntelliPestCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $configPath = $input->getOption('config');
-        $generateMixinExpectations = ! (bool) $input->getOption('no-expectation-helpers');
+        $this->setup($input);
 
-        if (! file_exists($configPath)) {
-            $output->writeln("<error>✗ Config file not found: $configPath</error>");
-
-            return Command::FAILURE;
-        }
-
-        $outputPath = $input->getOption('output') ?? $this->resolveDefaultOutputPath();
-
-        if (! str_ends_with($outputPath, '.php')) {
-            $output->writeln("<error>✗ Output file must have a .php extension: $outputPath</error>");
+        if (! file_exists($this->configPath)) {
+            $output->writeln("<error>✗ Config file not found: $this->configPath</error>");
 
             return Command::FAILURE;
         }
 
-        $directory = dirname($outputPath);
+        if (! str_ends_with($this->outputPath, '.php')) {
+            $output->writeln("<error>✗ Output file must have a .php extension: $this->outputPath</error>");
+
+            return Command::FAILURE;
+        }
+
+        if ($this->watch) {
+            return $this->startWatchMode($input, $output);
+        }
+
+        return $this->generateHelper($output, ! $this->shush);
+    }
+
+    private function setup(InputInterface $input): void
+    {
+        $this->configPath = $input->getOption('config');
+        $this->outputPath = $input->getOption('output') ?? $this->resolveDefaultOutputPath();
+        $this->shush = (bool) $input->getOption('shush');
+        $this->generateMixinExpectations = ! (bool) $input->getOption('no-expectation-helpers');
+        $this->watch = (bool) $input->getOption('watch');
+    }
+
+    private function generateHelper(OutputInterface $output, bool $displayFooter): int
+    {
+        $directory = dirname($this->outputPath);
         $invalidSegment = $this->findBlockingFileInPath($directory);
 
         if ($invalidSegment !== null) {
@@ -134,9 +170,9 @@ class IntelliPestCommand extends Command
             return Command::FAILURE;
         }
 
-        $intellipest = new IntelliPest($configPath, $generateMixinExpectations);
+        $intellipest = new IntelliPest($this->configPath, $this->generateMixinExpectations);
 
-        $output->writeln("<info>∘ Analyzing Pest config: $configPath</info>");
+        $output->writeln("<info>∘ Analyzing Pest config: $this->configPath</info>");
         $intellipest->analyze();
         $content = $intellipest->generate();
 
@@ -144,15 +180,97 @@ class IntelliPestCommand extends Command
             mkdir($directory, 0755, true);
         }
 
-        file_put_contents($outputPath, $content);
+        file_put_contents($this->outputPath, $content);
 
-        $output->writeln("<info>✓ Helper file generated: $outputPath</info>");
+        $output->writeln("<info>✓ Helper file generated: $this->outputPath</info>");
 
-        if (! $input->getOption('shush')) {
+        if ($displayFooter) {
             $this->displayFooter($output);
         }
 
         return Command::SUCCESS;
+    }
+
+    private function startWatchMode(InputInterface $input, OutputInterface $output): int
+    {
+        if (! $this->shush) {
+            $output->writeln('');
+            $output->writeln('<fg=bright-magenta;options=bold>👀 Watch Mode Enabled</>');
+            $output->writeln("<info>Monitoring: $this->configPath</info>");
+            $output->writeln("<info>Output:     $this->outputPath</info>");
+            $output->writeln('<info>Interval:   '.self::WATCH_INTERVAL_SECONDS.'s</info>');
+            $output->writeln('');
+            $output->writeln('<comment>Press Ctrl+C to stop watching...</comment>');
+            $output->writeln('');
+        }
+
+        clearstatcache(true, $this->configPath);
+        $this->lastModificationTime = filemtime($this->configPath) ?: 0;
+        $this->safeGenerateHelper($input, $output);
+
+        if (getenv('INTELLIPEST_WATCH_TEST_MODE') === '1') {
+            return Command::SUCCESS;
+        }
+
+        $timer = Loop::addPeriodicTimer(self::WATCH_INTERVAL_SECONDS, function () use ($input, $output): void {
+            clearstatcache(true, $this->configPath);
+            $currentModificationTime = filemtime($this->configPath);
+
+            if ($currentModificationTime === false) {
+                $output->writeln("<error>✗ Unable to read modification time for: $this->configPath</error>");
+
+                return;
+            }
+
+            if ($currentModificationTime > $this->lastModificationTime) {
+                $this->lastModificationTime = $currentModificationTime;
+                $output->writeln('');
+                $output->writeln('<info>✓ Change detected in config file</info>');
+                $this->safeGenerateHelper($input, $output);
+            }
+        });
+
+        if (function_exists('pcntl_signal')) {
+            pcntl_signal(SIGINT, function () use ($output, $timer): void {
+                $this->stopWatchMode($output, $timer);
+            });
+
+            pcntl_signal(SIGTERM, function () use ($output, $timer): void {
+                $this->stopWatchMode($output, $timer);
+            });
+        }
+
+        Loop::run();
+
+    return Command::SUCCESS;
+    }
+
+    private function stopWatchMode(OutputInterface $output, $timer): void
+    {
+        $output->writeln('');
+        $output->writeln('<info>✓ Watch mode stopped</info>');
+
+        if (! $this->shush) {
+            $this->displayFooter($output);
+        }
+
+        Loop::cancelTimer($timer);
+        Loop::stop();
+    }
+
+    private function safeGenerateHelper(InputInterface $input, OutputInterface $output): void
+    {
+        try {
+            $result = $this->generateHelper($output, false);
+
+            if ($result === Command::FAILURE) {
+                $output->writeln('<error>✗ Generation failed. Continuing to watch for changes...</error>');
+            }
+        } catch (\Throwable $exception) {
+            $output->writeln('');
+            $output->writeln('<error>✗ Error during generation: '.$exception->getMessage().'</error>');
+            $output->writeln('<info>∘ Continuing to watch for changes...</info>');
+        }
     }
 
     private function resolveDefaultOutputPath(): string

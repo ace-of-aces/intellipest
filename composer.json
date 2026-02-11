@@ -14,7 +14,8 @@
     "require": {
         "php": "^8.3",
         "symfony/console": "^7.4",
-        "nikic/php-parser": "^5.7"
+        "nikic/php-parser": "^5.7",
+        "react/event-loop": "^1.6"
     },
     "require-dev": {
         "pestphp/pest": "^4.3",

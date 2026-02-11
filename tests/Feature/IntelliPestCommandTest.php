@@ -153,3 +153,49 @@ test('intellipest command displays ASCII art header on wide terminals', function
     expect($commandTester->getStatusCode())->toBe(0);
     expect($commandTester->getDisplay())->toContain('████████╗');
 })->with('intellipestCommand');
+
+test('intellipest command generates file on initial watch run', function (CommandTester $commandTester) {
+    putenv('INTELLIPEST_WATCH_TEST_MODE=1');
+    $configPath = __DIR__.'/../Fixtures/BasicCase/Pest.php';
+    $outputPath = testOutputDir().'/watch-test-helper.php';
+
+    $commandTester->execute([
+        '--config' => $configPath,
+        '--output' => $outputPath,
+        '--watch' => true,
+    ]);
+
+    expect(file_exists($outputPath))->toBeTrue();
+    expect(file_get_contents($outputPath))->toStartWith('<?php');
+})->with('intellipestCommand');
+
+test('intellipest command displays watch mode info when enabled', function (CommandTester $commandTester) {
+    putenv('INTELLIPEST_WATCH_TEST_MODE=1');
+    $configPath = __DIR__.'/../Fixtures/BasicCase/Pest.php';
+    $outputPath = testOutputDir().'/watch-info-helper.php';
+
+    $commandTester->execute([
+        '--config' => $configPath,
+        '--output' => $outputPath,
+        '--watch' => true,
+    ]);
+
+    expect($commandTester->getDisplay())->toContain('Watch Mode Enabled');
+    expect($commandTester->getDisplay())->toContain('Monitoring:');
+    expect($commandTester->getDisplay())->toContain('Interval:');
+})->with('intellipestCommand');
+
+test('intellipest command suppresses watch mode info with --shush', function (CommandTester $commandTester) {
+    putenv('INTELLIPEST_WATCH_TEST_MODE=1');
+    $configPath = __DIR__.'/../Fixtures/BasicCase/Pest.php';
+    $outputPath = testOutputDir().'/watch-shush-helper.php';
+
+    $commandTester->execute([
+        '--config' => $configPath,
+        '--output' => $outputPath,
+        '--watch' => true,
+        '--shush' => true,
+    ]);
+
+    expect($commandTester->getDisplay())->not()->toContain('Watch Mode Enabled');
+})->with('intellipestCommand');
