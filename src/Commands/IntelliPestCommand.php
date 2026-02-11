@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Terminal;
 
-class IntelliPestCommand extends Command
+final class IntelliPestCommand extends Command
 {
     private const DEFAULT_OUTPUT_FILE = '_pest-helper.php';
 
