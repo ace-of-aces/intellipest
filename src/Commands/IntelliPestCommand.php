@@ -242,7 +242,7 @@ class IntelliPestCommand extends Command
 
         Loop::run();
 
-    return Command::SUCCESS;
+        return Command::SUCCESS;
     }
 
     private function stopWatchMode(OutputInterface $output, $timer): void
