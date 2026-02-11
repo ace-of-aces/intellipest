@@ -6,6 +6,7 @@ namespace AceOfAces\IntelliPest\Commands;
 
 use AceOfAces\IntelliPest\IntelliPest;
 use React\EventLoop\Loop;
+use React\EventLoop\TimerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -245,7 +246,7 @@ class IntelliPestCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function stopWatchMode(OutputInterface $output, $timer): void
+    private function stopWatchMode(OutputInterface $output, TimerInterface $timer): void
     {
         $output->writeln('');
         $output->writeln('<info>✓ Watch mode stopped</info>');
