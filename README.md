@@ -83,6 +83,13 @@ Don't generate helper methods for Pest's built-in expectations in the helper fil
 
 Don't show the (beautiful) header and footer in the console output 😔
 
+### `--watch` / `-w`
+
+Watch the `Pest.php` configuration file and automatically regenerate the helper file when changes are detected. Checks for changes every second.
+
+> [!NOTE]
+> The watch process continues running until manually stopped (Ctrl+C). Syntax errors in the config file are reported but don't stop the watcher.
+
 ### `--silent`
 
 Don't output **any** console messages (useful for CI).
