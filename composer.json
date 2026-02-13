@@ -1,5 +1,4 @@
 {
-    "version": "0.1.0",
     "name": "ace-of-aces/intellipest",
     "description": "Generate IDE helpers to assist development with PestPHP",
     "authors": [
