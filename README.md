@@ -85,12 +85,12 @@ Don't show the (beautiful) header and footer in the console output 😔
 
 ### `--watch` / `-w`
 
-Watch the `Pest.php` configuration file and automatically regenerate the helper file when changes are detected. Checks for changes every second.
+Watch the `Pest.php` configuration file and automatically regenerate the helper file when changes are detected. Checks for changes every half second.
 
 > [!NOTE]
 > The watch process continues running until manually stopped (Ctrl+C). Syntax errors in the config file are reported but don't stop the watcher.
 
-### `--silent`
+### `--quiet` / `-q`
 
 Don't output **any** console messages (useful for CI).
 
@@ -106,7 +106,7 @@ which enables type hinting the `$this` variable inside of test cases.
 > [!NOTE]
 > For PHPStorm users, we recommend just using the first-party [Pest plugin](https://plugins.jetbrains.com/plugin/14636-pest) by JetBrains.
 
-### Pest Version compatiblity
+### Pest Version compatibility
 
 Exact API compatibility for minor Pest versions has not been thoroughly tested as of right now. This may improve in future releases.
 
