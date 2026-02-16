@@ -27,6 +27,8 @@ IntelliPest is a CLI tool that generates a helper file based on your own Pest se
 
 This assists your IDE or coding agent to better understand your tests, enabling full autocompletion and error checking for [compatible language servers](#compatibility).
 
+Editors/IDEs and Coding Agents which can benefit from this include [VS Code](https://code.visualstudio.com), [Cursor](https://cursor.com), [Zed](https://zed.dev) and [OpenCode](https://opencode.ai).
+
 ## Quick Start
 
 For standard Pest setups with the `Pest.php` configuration file located in `./tests/Pest.php`, you can follow these steps.
