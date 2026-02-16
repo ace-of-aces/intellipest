@@ -7,7 +7,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/ace-of-aces/intellipest/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/ace-of-aces/intellipest/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/ace-of-aces/intellipest.svg?style=flat-square)](https://packagist.org/packages/ace-of-aces/intellipest)
 
-<p>IntelliPest - Better IDE intelligence for the <a href="https://pestphp.com/">PestPHP testing framework</a>.</p>
+<p>IntelliPest - Enhanced coding assistance for <a href="https://pestphp.com/">PestPHP</a>.</p>
 </div>
 
 ## Features
