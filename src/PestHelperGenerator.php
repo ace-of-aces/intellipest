@@ -12,7 +12,7 @@ use AceOfAces\IntelliPest\Support\Stub;
  * Generates IDE helper file content from a parsed PestConfig.
  *
  * Produces a PHP file with:
- * - Global Pest function stubs (beforeAll, beforeEach, test, it)
+ * - Global Pest function stubs (afterEach, beforeEach, test, it)
  * - Pest\Expectation and Pest\Expectations\OppositeExpectation classes
  * - Test case stub classes with trait use statements
  * - PHPUnit\Framework\TestCase with default traits (if any)

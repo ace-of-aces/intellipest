@@ -3,13 +3,6 @@
 namespace {
 
     /**
-     * Runs the given closure after all tests in the current file.
-     *
-     * @param-closure-this \Tests\Fixtures\Stubs\SomeTestCase  $closure
-     */
-    function afterAll(Closure $closure): void {}
-
-    /**
      * Runs the given closure after each test in the current file.
      *
      * @param-closure-this \Tests\Fixtures\Stubs\SomeTestCase  $closure
@@ -17,13 +10,6 @@ namespace {
      * @return \Pest\Concerns\Expectable|\Pest\Support\HigherOrderTapProxy<\Pest\Concerns\Expectable|\Pest\PendingCalls\TestCall|\Tests\Fixtures\Stubs\SomeTestCase>|\Pest\PendingCalls\TestCall|mixed
      */
     function afterEach(?Closure $closure = null): \Pest\PendingCalls\AfterEachCall {}
-
-    /**
-     * Runs the given closure before all tests in the current file.
-     *
-     * @param-closure-this \Tests\Fixtures\Stubs\SomeTestCase  $closure
-     */
-    function beforeAll(Closure $closure): void {}
 
     /**
      * Runs the given closure before each test in the current file.
