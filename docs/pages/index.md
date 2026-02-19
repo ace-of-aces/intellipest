@@ -4,7 +4,7 @@ layout: home
 
 hero:
     name: "IntelliPest"
-    tagline: IntelliPest - Enhanced coding assistance for PestPHP.
+    tagline: Enhanced coding assistance for PestPHP in VS Code, Cursor, Zed, OpenCode and more.
     actions:
         - theme: brand
           text: Quick Start
