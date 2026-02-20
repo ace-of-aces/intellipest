@@ -52,3 +52,16 @@ Run PHPStan:
 ```bash
 composer analyze
 ```
+
+## 2. Documentation
+
+The documentation is built using [Vitepress](https://vitepress.dev/) and located in `/docs`.
+
+We use [pnpm](https://pnpm.io/) for package management.
+
+To run the site locally, run:
+```bash
+cd docs
+pnpm i
+pnpm docs:dev
+```
