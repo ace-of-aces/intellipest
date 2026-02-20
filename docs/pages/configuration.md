@@ -36,7 +36,7 @@ Don't generate helper methods for Pest's built-in expectations in the helper fil
 
 ## `--shush` / `-s`
 
-Don't show the (beautiful) header and footer in the console output.
+Hide the (beautiful) header and footer in the console output.
 
 ```bash
 ./vendor/bin/intellipest --shush

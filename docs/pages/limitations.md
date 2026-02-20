@@ -19,7 +19,7 @@ The resulting type hint in all test cases will **always** be a union of both Tes
 
 ![$this type hint screenshot](/screenshot-type-hint.png)
 
-> It's important to be aware of this while writing tests, as suggestions from both TestCase classes will appear on the `$this` variable inside of tests, even though they _might_ not be available (possibly resulting in a runtime exception when called from the wrong context).
+> It's important to be aware of this when writing tests, as suggestions from both TestCase classes will appear on the `$this` variable inside tests, even though they _might_ not be available (possibly resulting in a runtime exception when called from the wrong context).
 
 ## Technical Details
 
