@@ -8,6 +8,9 @@ export default defineConfig({
     description: "IntelliPest - Enhanced coding assistance for PestPHP.",
     srcDir: './pages',
     cleanUrls: true,
+    sitemap: {
+        hostname: 'https://intellipest.julian.center'
+    },
     markdown: {
         theme: {
             light: 'github-light',
