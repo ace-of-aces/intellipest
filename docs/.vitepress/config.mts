@@ -44,6 +44,7 @@ export default defineConfig({
                 text: 'Getting Started',
                 items: [
                     { text: 'Quick Start', link: '/quick-start' },
+                    { text: 'Recipes', link: '/recipes' },
                     { text: 'Configuration', link: '/configuration' },
                     { text: 'Compatibility', link: '/compatibility' },
                 ]

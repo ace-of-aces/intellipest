@@ -18,7 +18,8 @@ composer require ace-of-aces/intellipest
 
 ### Setup
 
-> For non-standard setups (e.g., custom `Pest.php` location), check the [Configuration](/configuration) page first.
+> [!IMPORTANT]
+> For non-standard setups (e.g., a custom `Pest.php` location), check the [Configuration](/configuration) page first.
 
 For standard project setups, just run this command to generate the helper file:
 
@@ -31,3 +32,6 @@ The terminal output should look something like this:
 ![terminal screenshot](/screenshot-console.png)
 
 If the command ran successfully, you should be all set! You may have to restart your LSP for it to register the helper file.
+
+> [!TIP]
+> Using a Laravel Starter Kit? Check out the [recipe for an easy watch mode setup](/cookbook#watch-mode-laravel-starter-kits).
