@@ -34,4 +34,4 @@ The terminal output should look something like this:
 If the command ran successfully, you should be all set! You may have to restart your LSP for it to register the helper file.
 
 > [!TIP]
-> Using a Laravel Starter Kit? Check out the [recipe for an easy watch mode setup](/cookbook#watch-mode-laravel-starter-kits).
+> Using a Laravel Starter Kit? Check out the [recipe for an easy watch mode setup](/recipes#watch-mode-laravel-starter-kits).
