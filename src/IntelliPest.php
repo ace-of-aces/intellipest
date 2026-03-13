@@ -18,7 +18,7 @@ final class IntelliPest
 
     public function __construct(
         public string $configPath = 'tests/Pest.php',
-        public bool $generateMixinExpectations = true
+        public bool $generateMixinExpectations = false
     ) {}
 
     public function analyze(): void

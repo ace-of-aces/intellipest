@@ -20,7 +20,7 @@ use AceOfAces\IntelliPest\Support\Stub;
 final class PestHelperGenerator
 {
     public function __construct(
-        protected bool $generateMixinExpectations = true
+        protected bool $generateMixinExpectations = false
     ) {}
 
     public function generate(PestConfig $config): string

@@ -55,10 +55,10 @@ final class IntelliPestCommand extends Command
                 'Path to write the generated IDE helper file',
             )
             ->addOption(
-                'no-expectation-helpers',
+                'expectation-helpers',
                 null,
                 InputOption::VALUE_NONE,
-                'Don\'t generate helper methods for built-in expectations in the output file'
+                'Generate helper methods for built-in expectations in the IDE helper file'
             )
             ->addOption(
                 'shush',
@@ -156,7 +156,7 @@ final class IntelliPestCommand extends Command
         $this->configPath = $input->getOption('config');
         $this->outputPath = $input->getOption('output') ?? $this->resolveDefaultOutputPath();
         $this->shush = (bool) $input->getOption('shush');
-        $this->generateMixinExpectations = ! (bool) $input->getOption('no-expectation-helpers');
+        $this->generateMixinExpectations = (bool) $input->getOption('expectation-helpers');
         $this->watch = (bool) $input->getOption('watch');
     }
 

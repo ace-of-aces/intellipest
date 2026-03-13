@@ -24,12 +24,12 @@ Specify the path to write the generated IDE helper file.
 
 > You may also set the output directory via the `INTELLIPEST_OUTPUT_DIR` environment variable.
 
-## `--no-expectation-helpers`
+## `--expectation-helpers`
 
-Don't generate helper methods for Pest's built-in expectations in the helper file.
+Generate additional helper methods for Pest's built-in expectations in the helper file.
 
 ```bash
-./vendor/bin/intellipest --no-expectation-helpers
+./vendor/bin/intellipest --expectation-helpers
 ```
 
 > Some LSPs like [Intelephense Premium](https://intelephense.com/) support the `@mixin` PHPDoc tag, which is used in Pest's source code, making these helper methods redundant for those users.

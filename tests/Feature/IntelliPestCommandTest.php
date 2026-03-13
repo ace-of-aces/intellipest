@@ -111,9 +111,9 @@ test('intellipest command fails when parent path contains an existing file', fun
     expect($commandTester->getDisplay())->toContain('is not a directory');
 })->with('intellipestCommand');
 
-test('intellipest command generates helper file with mixin expectations helpers by default', function (CommandTester $commandTester) {
+test('intellipest command generates helper file with mixin expectations helpers when the --expectation-helpers option is used', function (CommandTester $commandTester) {
     $commandTester->execute([
-        '--no-expectation-helpers' => false,
+        '--expectation-helpers' => true,
     ]);
 
     $expectationHelperContent = Stub::render(dirname(__DIR__).'/../stubs/mixin_expectations.stub');
@@ -123,10 +123,8 @@ test('intellipest command generates helper file with mixin expectations helpers 
     expect(file_get_contents(testOutputPath()))->toContain($expectationHelperContent);
 })->with('intellipestCommand');
 
-test('intellipest command generates helper file without mixin expectations helpers when --no-expectation-helpers option is used', function (CommandTester $commandTester) {
-    $commandTester->execute([
-        '--no-expectation-helpers' => true,
-    ]);
+test('intellipest command generates helper file without mixin expectations helpers by default', function (CommandTester $commandTester) {
+    $commandTester->execute([]);
 
     $expectationHelperContent = Stub::render(dirname(__DIR__).'/../stubs/mixin_expectations.stub');
 
