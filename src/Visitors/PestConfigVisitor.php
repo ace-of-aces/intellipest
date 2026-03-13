@@ -17,6 +17,7 @@ use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
 use PhpParser\Node\Scalar\String_;
+use PhpParser\Node\VariadicPlaceholder;
 use PhpParser\NodeVisitorAbstract;
 
 /**
@@ -81,11 +82,11 @@ final class PestConfigVisitor extends NodeVisitorAbstract
      * Given: pest()->extend(X)->use(Y)->in('Feature')
      * AST:   MethodCall(MethodCall(MethodCall(FuncCall('pest'), 'extend', [X]), 'use', [Y]), 'in', ['Feature'])
      *
-     * @return array{string, list<Arg|\PhpParser\Node\VariadicPlaceholder>, list<array{name: string, args: list<Arg|\PhpParser\Node\VariadicPlaceholder>}>}|null
+     * @return array{string, list<Arg|VariadicPlaceholder>, list<array{name: string, args: list<Arg|VariadicPlaceholder>}>}|null
      */
     private function unwindChain(Node\Expr $expr): ?array
     {
-        /** @var list<array{name: string, args: list<Arg|\PhpParser\Node\VariadicPlaceholder>}> $methods */
+        /** @var list<array{name: string, args: list<Arg|VariadicPlaceholder>}> $methods */
         $methods = [];
         $current = $expr;
 
@@ -130,7 +131,7 @@ final class PestConfigVisitor extends NodeVisitorAbstract
      * All extension methods (extend, extends, use, uses) are treated identically
      * since they are all aliases in Pest's Configuration class.
      *
-     * @param  list<array{name: string, args: list<Arg|\PhpParser\Node\VariadicPlaceholder>}>  $methods
+     * @param  list<array{name: string, args: list<Arg|VariadicPlaceholder>}>  $methods
      */
     private function processPestChain(array $methods): void
     {
@@ -159,7 +160,7 @@ final class PestConfigVisitor extends NodeVisitorAbstract
      *
      * Recognized methods: extend
      *
-     * @param  list<array{name: string, args: list<Arg|\PhpParser\Node\VariadicPlaceholder>}>  $methods
+     * @param  list<array{name: string, args: list<Arg|VariadicPlaceholder>}>  $methods
      */
     private function processExpectChain(array $methods): void
     {
@@ -179,8 +180,8 @@ final class PestConfigVisitor extends NodeVisitorAbstract
      * The root uses() call contains class-like arguments directly.
      * Additional chained extension methods (extend, use, etc.) are also collected.
      *
-     * @param  list<Arg|\PhpParser\Node\VariadicPlaceholder>  $rootArgs
-     * @param  list<array{name: string, args: list<Arg|\PhpParser\Node\VariadicPlaceholder>}>  $methods
+     * @param  list<Arg|VariadicPlaceholder>  $rootArgs
+     * @param  list<array{name: string, args: list<Arg|VariadicPlaceholder>}>  $methods
      */
     private function processUsesChain(array $rootArgs, array $methods): void
     {
@@ -207,7 +208,7 @@ final class PestConfigVisitor extends NodeVisitorAbstract
     /**
      * Extract all class-like arguments and resolve each to a ClassLikeReference.
      *
-     * @param  list<Arg|\PhpParser\Node\VariadicPlaceholder>  $args
+     * @param  list<Arg|VariadicPlaceholder>  $args
      * @return list<ClassLikeReference>
      */
     private function resolveClassArgs(array $args): array
@@ -256,7 +257,7 @@ final class PestConfigVisitor extends NodeVisitorAbstract
     /**
      * Extract the first string literal argument from an argument list.
      *
-     * @param  list<Arg|\PhpParser\Node\VariadicPlaceholder>  $args
+     * @param  list<Arg|VariadicPlaceholder>  $args
      */
     private function extractStringArg(array $args): ?string
     {

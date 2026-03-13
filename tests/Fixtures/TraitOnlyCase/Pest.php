@@ -1,5 +1,7 @@
 <?php
 
+use Tests\Fixtures\Stubs\SomeTrait;
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -11,4 +13,4 @@
 |
 */
 
-pest()->extend(Tests\Fixtures\Stubs\SomeTrait::class)->in('Feature');
+pest()->extend(SomeTrait::class)->in('Feature');
