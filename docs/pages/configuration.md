@@ -32,7 +32,7 @@ Generate additional helper methods for Pest's built-in expectations in the helpe
 ./vendor/bin/intellipest --expectation-helpers
 ```
 
-> Some LSPs like [Intelephense Premium](https://intelephense.com/) support the `@mixin` PHPDoc tag, which is used in Pest's source code, making these helper methods redundant for those users.
+> Pest exposes many of its expectation methods through `@mixin` PHPDoc annotations under the hood. If your LSP understands those annotations, such as [Intelephense Premium](https://intelephense.com/), these generated helper methods are usually unnecessary. If it does not, `--expectation-helpers` provides explicit helper methods so those expectations still get autocompleted.
 
 ## `--shush` / `-s`
 
