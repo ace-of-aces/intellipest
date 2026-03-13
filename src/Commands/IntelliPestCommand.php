@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AceOfAces\IntelliPest\Commands;
 
+use AceOfAces\IntelliPest\Concerns\HasTypedCommandOptions;
 use AceOfAces\IntelliPest\IntelliPest;
 use React\EventLoop\Loop;
 use React\EventLoop\TimerInterface;
@@ -15,6 +16,8 @@ use Symfony\Component\Console\Terminal;
 
 final class IntelliPestCommand extends Command
 {
+    use HasTypedCommandOptions;
+
     private const DEFAULT_OUTPUT_FILE = '_pest-helper.php';
 
     private const DEFAULT_OUTPUT_DIR = '.intellipest';
@@ -153,11 +156,11 @@ final class IntelliPestCommand extends Command
 
     private function setup(InputInterface $input): void
     {
-        $this->configPath = $input->getOption('config');
-        $this->outputPath = $input->getOption('output') ?? $this->resolveDefaultOutputPath();
-        $this->shush = (bool) $input->getOption('shush');
-        $this->generateMixinExpectations = (bool) $input->getOption('expectation-helpers');
-        $this->watch = (bool) $input->getOption('watch');
+        $this->configPath = $this->getStringOption($input, 'config');
+        $this->outputPath = $this->getNullableStringOption($input, 'output') ?? $this->resolveDefaultOutputPath();
+        $this->shush = $this->getBoolOption($input, 'shush');
+        $this->generateMixinExpectations = $this->getBoolOption($input, 'expectation-helpers');
+        $this->watch = $this->getBoolOption($input, 'watch');
     }
 
     private function generateHelper(OutputInterface $output, bool $displayFooter): int
