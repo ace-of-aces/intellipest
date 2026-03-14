@@ -24,6 +24,7 @@ foreach ($fixtures as $fixture) {
 
     try {
         $intellipest = new IntelliPest($configPath, $mixinExpectations);
+        $intellipest->analyze();
         $generated = $intellipest->generate();
 
         $dir = dirname($resultPath);
