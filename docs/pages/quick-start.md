@@ -13,7 +13,7 @@ Make sure your project meets the following requirements:
 ## Installation
 
 ```bash
-composer require ace-of-aces/intellipest
+composer require --dev ace-of-aces/intellipest
 ```
 
 ### Setup
