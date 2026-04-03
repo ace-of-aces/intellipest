@@ -12,7 +12,7 @@
     "type": "library",
     "require": {
         "php": "^8.3",
-        "symfony/console": "^7.4",
+        "symfony/console": "^7.4.0 || ^8.0.0",
         "nikic/php-parser": "^5.7",
         "react/event-loop": "^1.6"
     },
