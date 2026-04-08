@@ -2,6 +2,23 @@
 
 All notable changes to `IntelliPest` will be documented in this file.
 
+## v0.4.0 - 2026-04-08
+
+### What's Changed
+
+This version improves the accuracy of the helpers generated for custom expectations.
+
+> [!NOTE]
+After upgrading, run `./vendor/bin/intellipest` again for these changes to take effect.
+
+* [Feat]: Improve Custom Expectation Helpers by @ace-of-aces in https://github.com/ace-of-aces/intellipest/pull/7
+
+### New Contributors
+
+* @ace-of-aces made their first contribution in https://github.com/ace-of-aces/intellipest/pull/7
+
+**Full Changelog**: https://github.com/ace-of-aces/intellipest/compare/v0.3.1...v0.4.0
+
 ## v0.3.1 - 2026-04-08
 
 ### What's Changed
