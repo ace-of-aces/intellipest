@@ -2,6 +2,25 @@
 
 All notable changes to `IntelliPest` will be documented in this file.
 
+## v0.3.1 - 2026-04-08
+
+### What's Changed
+
+This version adds compatibility for `symfony/console` ^8.0.
+
+* Allow symfony/console ^8.0 alongside ^7.4 by @joschuba in https://github.com/ace-of-aces/intellipest/pull/6
+* Bump pnpm/action-setup from 4 to 5 by @dependabot[bot] in https://github.com/ace-of-aces/intellipest/pull/2
+* Bump ramsey/composer-install from 3 to 4 by @dependabot[bot] in https://github.com/ace-of-aces/intellipest/pull/3
+* Bump actions/deploy-pages from 4 to 5 by @dependabot[bot] in https://github.com/ace-of-aces/intellipest/pull/4
+* Bump actions/configure-pages from 5 to 6 by @dependabot[bot] in https://github.com/ace-of-aces/intellipest/pull/5
+
+### New Contributors
+
+* @dependabot[bot] made their first contribution in https://github.com/ace-of-aces/intellipest/pull/2
+* @joschuba made their first contribution in https://github.com/ace-of-aces/intellipest/pull/6
+
+**Full Changelog**: https://github.com/ace-of-aces/intellipest/compare/v0.3.0...v0.3.1
+
 ## v0.3.0 - 2026-03-13
 
 ### What's Changed
