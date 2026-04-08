@@ -72,10 +72,7 @@ final class IntelliPest
      */
     public function buildConfig(): PestConfig
     {
-        $expectations = array_map(
-            fn ($call) => $call->name,
-            $this->visitor->getExpectCalls(),
-        );
+        $expectations = $this->visitor->getExpectCalls();
 
         $testCaseExtensions = [];
         $defaultTestCaseTraits = [];

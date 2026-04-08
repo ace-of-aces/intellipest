@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AceOfAces\IntelliPest;
 
+use AceOfAces\IntelliPest\Data\ExpectCall;
 use AceOfAces\IntelliPest\Data\PestConfig;
 use AceOfAces\IntelliPest\Data\TestCaseExtension;
 use AceOfAces\IntelliPest\Support\Stub;
@@ -86,35 +87,43 @@ final class PestHelperGenerator
     }
 
     /**
-     * Generate an Expectation or OppositeExpectation class with @method docblocks.
+     * Generate an Expectation or OppositeExpectation class with custom helper methods.
      *
-     * @param  list<string>  $expectations  Custom expectation method names
+     * @param  list<ExpectCall>  $expectations
      */
     private function generateExpectationClass(array $expectations, bool $opposite = false): string
     {
-        $methodLines = array_map(
-            fn (string $name): string => "     * @method self {$name}()",
-            $expectations,
-        );
+        $methodLines = array_map($this->generateExpectationMethod(...), $expectations);
 
         $className = $opposite ? 'OppositeExpectation' : 'Expectation';
 
         $lines = [];
-        if (count($expectations) > 0) {
-            $lines[] = '    /**';
-            $lines = array_merge($lines, $methodLines);
-            $lines[] = '     */';
-        }
         if ($this->generateMixinExpectations) {
             $lines[] = "    class {$className}";
             $lines[] = '    {';
+            if (count($methodLines) > 0) {
+                $lines = array_merge($lines, $methodLines);
+                $lines[] = '';
+            }
             $lines[] = Stub::render(dirname(__DIR__).'/stubs/mixin_expectations.stub');
+            $lines[] = '    }';
+        } elseif (count($methodLines) > 0) {
+            $lines[] = "    class {$className} {";
+            $lines = array_merge($lines, $methodLines);
             $lines[] = '    }';
         } else {
             $lines[] = "    class {$className} {}";
         }
 
         return implode("\n", $lines);
+    }
+
+    private function generateExpectationMethod(ExpectCall $expectation): string
+    {
+        $parameters = implode(', ', $expectation->parameters);
+        $returnType = $expectation->returnType ?? 'self';
+
+        return "        public function {$expectation->name}({$parameters}): {$returnType} {}";
     }
 
     /**

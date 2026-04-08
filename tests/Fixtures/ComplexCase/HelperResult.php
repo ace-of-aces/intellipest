@@ -46,21 +46,33 @@ namespace {
 
 namespace Pest {
 
-    /**
-     * @method self toBePositive()
-     * @method self toBeEmail()
-     */
-    class Expectation {}
+    class Expectation {
+        public function toBePositive(): self {}
+        public function toBeEmail(): self {}
+        public function toHaveLength(int $length = 1): self {}
+        public function toEqualFoo(): bool {}
+        public function toContainValues(mixed ...$values): self {}
+        public function toAppendInto(array &$bucket): array {}
+        public function toTransformWith(Closure $transform): mixed {}
+        public function toUseThreshold(int|float $threshold, ?string $message = null): int|false {}
+        public function toMatchAny(string|int $expected, array $options = []): self {}
+    }
 
 }
 
 namespace Pest\Expectations {
 
-    /**
-     * @method self toBePositive()
-     * @method self toBeEmail()
-     */
-    class OppositeExpectation {}
+    class OppositeExpectation {
+        public function toBePositive(): self {}
+        public function toBeEmail(): self {}
+        public function toHaveLength(int $length = 1): self {}
+        public function toEqualFoo(): bool {}
+        public function toContainValues(mixed ...$values): self {}
+        public function toAppendInto(array &$bucket): array {}
+        public function toTransformWith(Closure $transform): mixed {}
+        public function toUseThreshold(int|float $threshold, ?string $message = null): int|false {}
+        public function toMatchAny(string|int $expected, array $options = []): self {}
+    }
 
 }
 
