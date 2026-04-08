@@ -46,18 +46,16 @@ namespace {
 
 namespace Pest {
 
-    /**
-     * @method self toBeOne()
-     */
-    class Expectation {}
+    class Expectation {
+        public function toBeOne(): self {}
+    }
 
 }
 
 namespace Pest\Expectations {
 
-    /**
-     * @method self toBeOne()
-     */
-    class OppositeExpectation {}
+    class OppositeExpectation {
+        public function toBeOne(): self {}
+    }
 
 }

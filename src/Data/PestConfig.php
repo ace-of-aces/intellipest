@@ -14,7 +14,7 @@ namespace AceOfAces\IntelliPest\Data;
 final readonly class PestConfig
 {
     /**
-     * @param  list<string>  $expectations  Custom expectation method names
+     * @param  list<ExpectCall>  $expectations  Custom expectation helper signatures
      * @param  list<TestCaseExtension>  $testCaseExtensions  Test case bindings with traits
      * @param  list<string>  $defaultTestCaseTraits  Traits not associated with a specific test case
      */

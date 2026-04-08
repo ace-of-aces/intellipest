@@ -46,19 +46,17 @@ namespace {
 
 namespace Pest {
 
-    /**
-     * @method self toBeEmail()
-     */
-    class Expectation {}
+    class Expectation {
+        public function toBeEmail(): self {}
+    }
 
 }
 
 namespace Pest\Expectations {
 
-    /**
-     * @method self toBeEmail()
-     */
-    class OppositeExpectation {}
+    class OppositeExpectation {
+        public function toBeEmail(): self {}
+    }
 
 }
 

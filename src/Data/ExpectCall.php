@@ -9,7 +9,12 @@ namespace AceOfAces\IntelliPest\Data;
  */
 final readonly class ExpectCall
 {
+    /**
+     * @param  list<string>  $parameters
+     */
     public function __construct(
         public string $name,
+        public array $parameters = [],
+        public ?string $returnType = null,
     ) {}
 }
