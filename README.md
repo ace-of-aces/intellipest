@@ -16,9 +16,6 @@
 - 🫵🏻 Supports your custom test cases
 - 🧩 Pure PHP & framework agnostic
 
-> [!IMPORTANT]
-> This project is currently in beta. Features are subject to change.
-
 ## Introduction
 
 IntelliPest is a CLI tool that generates a helper file based on your own Pest setup.
