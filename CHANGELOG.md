@@ -2,6 +2,22 @@
 
 All notable changes to `IntelliPest` will be documented in this file.
 
+## v1.0.0 🎉 - 2026-05-09
+
+Finally tagging this as stable :)
+No breaking changes from `v0.4.0`, just some [improvements to return type declarations of Pest's global test functions](https://github.com/ace-of-aces/intellipest/commit/288a19cfa6b1bc61b9ab476634e68a2fbf0a86d4).
+
+> [!NOTE]
+After upgrading, run `./vendor/bin/intellipest` again for these changes to take effect.
+
+### What's Changed
+
+* Updated global function return types in 288a19cfa6b1bc61b9ab476634e68a2fbf0a86d4.
+* Bump actions/upload-pages-artifact from 4 to 5 by @dependabot[bot] in https://github.com/ace-of-aces/intellipest/pull/9
+* Bump pnpm/action-setup from 5 to 6 by @dependabot[bot] in https://github.com/ace-of-aces/intellipest/pull/8
+
+**Full Changelog**: https://github.com/ace-of-aces/intellipest/compare/v0.4.0...v1.0.0
+
 ## v0.4.0 - 2026-04-08
 
 ### What's Changed
