@@ -8,10 +8,10 @@ use AceOfAces\IntelliPest\Enums\ClassLikeType;
 use AceOfAces\IntelliPest\IntelliPest;
 
 /*
-|--------------------------------------------------------------------------
-| BasicCase: pest()->extend()->in() + expect()->extend()
-|--------------------------------------------------------------------------
-*/
+ |--------------------------------------------------------------------------
+ | BasicCase: pest()->extend()->in() + expect()->extend()
+ |--------------------------------------------------------------------------
+ */
 
 test('analyze parses pest() call chain from BasicCase fixture', function () {
     $intellipest = new IntelliPest('tests/Fixtures/BasicCase/Pest.php');
@@ -49,10 +49,10 @@ test('analyze produces no uses() calls from BasicCase fixture', function () {
 });
 
 /*
-|--------------------------------------------------------------------------
-| LegacyUsesCase: uses()->in() + expect()->extend()
-|--------------------------------------------------------------------------
-*/
+ |--------------------------------------------------------------------------
+ | LegacyUsesCase: uses()->in() + expect()->extend()
+ |--------------------------------------------------------------------------
+ */
 
 test('analyze parses legacy uses() call chain', function () {
     $intellipest = new IntelliPest('tests/Fixtures/LegacyUsesCase/Pest.php');
@@ -93,10 +93,10 @@ test('analyze produces no pest() calls from LegacyUsesCase fixture', function ()
 });
 
 /*
-|--------------------------------------------------------------------------
-| ComplexCase: multiple pest() chains + multiple expect() extensions
-|--------------------------------------------------------------------------
-*/
+ |--------------------------------------------------------------------------
+ | ComplexCase: multiple pest() chains + multiple expect() extensions
+ |--------------------------------------------------------------------------
+ */
 
 test('analyze parses multiple pest() call chains', function () {
     $intellipest = new IntelliPest('tests/Fixtures/ComplexCase/Pest.php');

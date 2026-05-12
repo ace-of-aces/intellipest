@@ -8,6 +8,7 @@ use AceOfAces\IntelliPest\Data\PestConfig;
 use AceOfAces\IntelliPest\Data\TestCaseExtension;
 use AceOfAces\IntelliPest\Enums\ClassLikeType;
 use AceOfAces\IntelliPest\Visitors\PestConfigVisitor;
+use PhpParser\ErrorHandler\Collecting;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\ParserFactory;
@@ -18,7 +19,7 @@ final class IntelliPest
 
     public function __construct(
         public string $configPath = 'tests/Pest.php',
-        public bool $generateMixinExpectations = false
+        public bool $generateMixinExpectations = false,
     ) {}
 
     public function analyze(): void
@@ -31,10 +32,14 @@ final class IntelliPest
 
         $parser = (new ParserFactory)->createForHostVersion();
 
-        try {
-            $ast = $parser->parse($code);
-        } catch (\Error $error) {
-            throw new \RuntimeException("Failed to parse config file: {$error->getMessage()}");
+        $errorHandler = new Collecting;
+
+        $ast = $parser->parse($code, $errorHandler);
+
+        if ($errorHandler->hasErrors()) {
+            $errors = $errorHandler->getErrors();
+            $messages = array_map(fn ($e) => $e->getMessage(), $errors);
+            throw new \RuntimeException('Failed to parse config file: '.implode('; ', $messages));
         }
 
         if ($ast === null) {
@@ -49,7 +54,6 @@ final class IntelliPest
         $traverser->traverse($ast);
 
         $this->visitor = $visitor;
-
     }
 
     /**

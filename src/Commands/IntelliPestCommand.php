@@ -24,8 +24,6 @@ final class IntelliPestCommand extends Command
 
     private const WATCH_INTERVAL_SECONDS = 0.5;
 
-    protected static string $defaultName = 'intellipest';
-
     private int $lastModificationTime = 0;
 
     private string $configPath;
@@ -49,7 +47,7 @@ final class IntelliPestCommand extends Command
                 'c',
                 InputOption::VALUE_REQUIRED,
                 'Path to the Pest.php configuration file',
-                'tests/Pest.php'
+                'tests/Pest.php',
             )
             ->addOption(
                 'output',
@@ -61,19 +59,19 @@ final class IntelliPestCommand extends Command
                 'expectation-helpers',
                 null,
                 InputOption::VALUE_NONE,
-                'Generate helper methods for built-in expectations in the IDE helper file'
+                'Generate helper methods for built-in expectations in the IDE helper file',
             )
             ->addOption(
                 'shush',
                 's',
                 InputOption::VALUE_NONE,
-                'Don\'t show the beautiful header and footer in the console output😔'
+                'Don\'t show the beautiful header and footer in the console output😔',
             )
             ->addOption(
                 'watch',
                 'w',
                 InputOption::VALUE_NONE,
-                'Watch the input configuration file and regenerate on changes'
+                'Watch the input configuration file and regenerate on changes',
             );
     }
 

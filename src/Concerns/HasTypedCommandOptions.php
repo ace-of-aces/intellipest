@@ -10,6 +10,7 @@ trait HasTypedCommandOptions
 {
     protected function getStringOption(InputInterface $input, string $name): string
     {
+        /** @var mixed $value */
         $value = $input->getOption($name);
 
         if (! is_string($value)) {
@@ -21,6 +22,7 @@ trait HasTypedCommandOptions
 
     protected function getNullableStringOption(InputInterface $input, string $name): ?string
     {
+        /** @var mixed $value */
         $value = $input->getOption($name);
 
         if ($value === null) {
@@ -36,6 +38,7 @@ trait HasTypedCommandOptions
 
     protected function getBoolOption(InputInterface $input, string $name): bool
     {
+        /** @var mixed $value */
         $value = $input->getOption($name);
 
         if (! is_bool($value)) {

@@ -223,7 +223,11 @@ final class PestConfigVisitor extends NodeVisitorAbstract
         $code = '';
 
         if ($param->type !== null) {
-            $code .= $this->renderType($param->type).' ';
+            $renderedType = $this->renderType($param->type);
+
+            if ($renderedType !== null) {
+                $code .= $renderedType.' ';
+            }
         }
 
         if ($param->byRef) {
@@ -277,15 +281,17 @@ final class PestConfigVisitor extends NodeVisitorAbstract
         }
 
         if ($type instanceof NullableType) {
-            return '?'.$this->renderType($type->type);
+            $renderedType = $this->renderType($type->type);
+
+            return $renderedType === null ? null : '?'.$renderedType;
         }
 
         if ($type instanceof UnionType) {
-            return implode('|', array_map($this->renderType(...), $type->types));
+            return $this->renderTypeList($type->types, '|');
         }
 
         if ($type instanceof IntersectionType) {
-            return implode('&', array_map($this->renderType(...), $type->types));
+            return $this->renderTypeList($type->types, '&');
         }
 
         if ($type instanceof Identifier || $type instanceof Name) {
@@ -293,6 +299,26 @@ final class PestConfigVisitor extends NodeVisitorAbstract
         }
 
         return null;
+    }
+
+    /**
+     * @param  array<array-key, Node>  $types
+     */
+    private function renderTypeList(array $types, string $separator): ?string
+    {
+        $renderedTypes = [];
+
+        foreach ($types as $type) {
+            $renderedType = $this->renderType($type);
+
+            if ($renderedType === null) {
+                return null;
+            }
+
+            $renderedTypes[] = $renderedType;
+        }
+
+        return implode($separator, $renderedTypes);
     }
 
     /**
