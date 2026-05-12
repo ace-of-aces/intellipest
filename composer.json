@@ -19,7 +19,8 @@
     "require-dev": {
         "pestphp/pest": "^4.3",
         "laravel/pint": "^1.29",
-        "phpstan/phpstan": "^2.1"
+        "phpstan/phpstan": "^2.1",
+        "carthage-software/mago": "^1.26.0"
     },
     "autoload": {
         "psr-4": {
@@ -40,10 +41,10 @@
         }
     },
     "scripts": {
-        "lint": "pint --test --parallel",
-        "format": "pint --parallel",
+        "lint": "mago fmt --check",
+        "format": "mago fmt",
         "test": "pest",
-        "analyze": "phpstan analyze",
+        "analyze": "mago analyze",
         "test:all": [
             "@lint",
             "@test",
