@@ -60,3 +60,5 @@ jobs:
 
       - name: Execute tests
         run: vendor/bin/pest --ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
