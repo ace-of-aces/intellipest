@@ -1,11 +1,11 @@
-name: Mago Static Analysis
+name: Mago Code Quality Checks
 
 on:
   push:
     paths:
       - "src/**/*.php"
       - "mago.toml"
-      - ".github/workflows/static-analysis.yml"
+      - ".github/workflows/code-quality.yml"
 
 jobs:
   mago:
@@ -24,7 +24,12 @@ jobs:
       - name: Install composer dependencies
         uses: ramsey/composer-install@v4
 
-      - name: Run Mago
+      - name: Mago Lint
+        run: ./vendor/bin/mago lint --reporting-format=github
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Mago Static Analysis
         run: ./vendor/bin/mago analyze --reporting-format=github
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
