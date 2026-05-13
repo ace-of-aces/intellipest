@@ -28,9 +28,7 @@ pest()->extend(TestCase::class)->in('Feature');
  |
  */
 
-expect()->extend('toBeOne', function () {
-    return $this->toBe(1);
-});
+expect()->extend('toBeOne', fn () => $this->toBe(1));
 
 /*
  |--------------------------------------------------------------------------
@@ -60,7 +58,7 @@ putenv("INTELLIPEST_OUTPUT_DIR={$intellipestTestOutputDir}");
 /**
  * Return the temporary output directory used by the IntelliPestCommand during tests.
  */
-function testOutputDir(): string
+function test_output_dir(): string
 {
     return getenv('INTELLIPEST_OUTPUT_DIR');
 }
@@ -68,15 +66,15 @@ function testOutputDir(): string
 /**
  * Return the full path to the temporary IDE helper file written during tests.
  */
-function testOutputPath(): string
+function test_output_path(): string
 {
-    return testOutputDir().'/_pest-helper.php';
+    return test_output_dir().'/_pest-helper.php';
 }
 
 /**
  * Recursively remove a directory and all its contents.
  */
-function cleanDirectory(string $path): void
+function clean_directory(string $path): void
 {
     if (! is_dir($path)) {
         return;

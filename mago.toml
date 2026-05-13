@@ -28,6 +28,8 @@ excludes = [
 ambiguous-function-call = { enabled = false }
 literal-named-argument = { enabled = false }
 halstead = { effort-threshold = 7000 }
+cyclomatic-complexity = { enabled = false }
+kan-defect = { enabled = false }
 too-many-methods = { threshold = 12 }
 no-empty-comment = { enabled = false}
 no-boolean-flag-parameter = { enabled = false}

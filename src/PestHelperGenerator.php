@@ -97,23 +97,46 @@ final class PestHelperGenerator
 
         $className = $opposite ? 'OppositeExpectation' : 'Expectation';
 
-        $lines = [];
         if ($this->generateMixinExpectations) {
-            $lines[] = "    class {$className}";
-            $lines[] = '    {';
-            if (count($methodLines) > 0) {
-                $lines = array_merge($lines, $methodLines);
-                $lines[] = '';
-            }
-            $lines[] = Stub::render(dirname(__DIR__).'/stubs/mixin_expectations.stub');
-            $lines[] = '    }';
-        } elseif (count($methodLines) > 0) {
-            $lines[] = "    class {$className} {";
-            $lines = array_merge($lines, $methodLines);
-            $lines[] = '    }';
-        } else {
-            $lines[] = "    class {$className} {}";
+            return $this->generateMixinExpectationClass($className, $methodLines);
         }
+
+        if (count($methodLines) > 0) {
+            return $this->generateExpectationClassWithMethods($className, $methodLines);
+        }
+
+        return "    class {$className} {}";
+    }
+
+    /**
+     * @param  list<string>  $methodLines
+     */
+    private function generateMixinExpectationClass(string $className, array $methodLines): string
+    {
+        $lines = [];
+        $lines[] = "    class {$className}";
+        $lines[] = '    {';
+
+        if (count($methodLines) > 0) {
+            $lines = array_merge($lines, $methodLines);
+            $lines[] = '';
+        }
+
+        $lines[] = Stub::render(dirname(__DIR__).'/stubs/mixin_expectations.stub');
+        $lines[] = '    }';
+
+        return implode("\n", $lines);
+    }
+
+    /**
+     * @param  list<string>  $methodLines
+     */
+    private function generateExpectationClassWithMethods(string $className, array $methodLines): string
+    {
+        $lines = [];
+        $lines[] = "    class {$className} {";
+        $lines = array_merge($lines, $methodLines);
+        $lines[] = '    }';
 
         return implode("\n", $lines);
     }

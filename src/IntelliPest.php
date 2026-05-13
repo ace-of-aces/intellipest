@@ -99,10 +99,17 @@ final class IntelliPest
                         );
                         $pendingTraits = [];
                     }
+
                     $pendingTestCase = $ref->name;
-                } elseif ($ref->type === ClassLikeType::Trait_) {
-                    $pendingTraits[] = $ref->name;
+
+                    continue;
                 }
+
+                if ($ref->type !== ClassLikeType::Trait_) {
+                    continue;
+                }
+
+                $pendingTraits[] = $ref->name;
             }
 
             // Finalize the last pending extension for this call
@@ -112,10 +119,16 @@ final class IntelliPest
                     traits: $pendingTraits,
                     directory: $call->in,
                 );
-            } elseif (count($pendingTraits) > 0) {
-                // Traits without an associated class become default traits
-                $defaultTestCaseTraits = array_merge($defaultTestCaseTraits, $pendingTraits);
+
+                continue;
             }
+
+            if (count($pendingTraits) === 0) {
+                continue;
+            }
+
+            // Traits without an associated class become default traits
+            $defaultTestCaseTraits = array_merge($defaultTestCaseTraits, $pendingTraits);
         }
 
         return new PestConfig(

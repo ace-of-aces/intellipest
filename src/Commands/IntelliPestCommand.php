@@ -207,7 +207,8 @@ final class IntelliPestCommand extends Command
         }
 
         clearstatcache(true, $this->configPath);
-        $this->lastModificationTime = filemtime($this->configPath) ?? 0;
+        // @mago-expect lint:no-shorthand-ternary
+        $this->lastModificationTime = filemtime($this->configPath) ?: 0;
         $this->safeGenerateHelper($input, $output);
 
         if (getenv('INTELLIPEST_WATCH_TEST_MODE') === '1') {
