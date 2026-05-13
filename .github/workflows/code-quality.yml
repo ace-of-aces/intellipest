@@ -6,6 +6,12 @@ on:
       - "src/**/*.php"
       - "mago.toml"
       - ".github/workflows/code-quality.yml"
+  pull_request:
+    paths:
+      - "src/**/*.php"
+      - "mago.toml"
+      - ".github/workflows/code-quality.yml"
+  workflow_dispatch:
 
 jobs:
   mago:
