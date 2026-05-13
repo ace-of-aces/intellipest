@@ -175,17 +175,19 @@ final class PestConfigVisitor extends NodeVisitorAbstract
     private function processExpectChain(array $methods): void
     {
         foreach ($methods as $method) {
-            if ($method['name'] === 'extend') {
-                $name = $this->extractStringArg($method['args']);
-                if ($name !== null) {
-                    [$parameters, $returnType] = $this->extractExpectationSignature($method['args']);
+            if ($method['name'] !== 'extend') {
+                continue;
+            }
 
-                    $this->expectCalls[] = new ExpectCall(
-                        name: $name,
-                        parameters: $parameters,
-                        returnType: $returnType,
-                    );
-                }
+            $name = $this->extractStringArg($method['args']);
+            if ($name !== null) {
+                [$parameters, $returnType] = $this->extractExpectationSignature($method['args']);
+
+                $this->expectCalls[] = new ExpectCall(
+                    name: $name,
+                    parameters: $parameters,
+                    returnType: $returnType,
+                );
             }
         }
     }

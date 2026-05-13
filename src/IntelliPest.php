@@ -38,7 +38,7 @@ final class IntelliPest
 
         if ($errorHandler->hasErrors()) {
             $errors = $errorHandler->getErrors();
-            $messages = array_map(fn ($e) => $e->getMessage(), $errors);
+            $messages = array_map(static fn ($e) => $e->getMessage(), $errors);
             throw new \RuntimeException('Failed to parse config file: '.implode('; ', $messages));
         }
 

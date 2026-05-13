@@ -14,7 +14,7 @@ trait HasTypedCommandOptions
         $value = $input->getOption($name);
 
         if (! is_string($value)) {
-            throw new \UnexpectedValueException("The '$name' option must be a string.");
+            throw new \UnexpectedValueException("The '{$name}' option must be a string.");
         }
 
         return $value;
@@ -30,7 +30,7 @@ trait HasTypedCommandOptions
         }
 
         if (! is_string($value)) {
-            throw new \UnexpectedValueException("The '$name' option must be a string or null.");
+            throw new \UnexpectedValueException("The '{$name}' option must be a string or null.");
         }
 
         return $value;
@@ -42,7 +42,7 @@ trait HasTypedCommandOptions
         $value = $input->getOption($name);
 
         if (! is_bool($value)) {
-            throw new \UnexpectedValueException("The '$name' option must be a boolean.");
+            throw new \UnexpectedValueException("The '{$name}' option must be a boolean.");
         }
 
         return $value;

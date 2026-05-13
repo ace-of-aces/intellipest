@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use AceOfAces\IntelliPest\Commands\IntelliPestCommand;
 use AceOfAces\IntelliPest\Support\Stub;
 use Symfony\Component\Console\Application;
@@ -24,7 +26,7 @@ test('intellipest command runs successfully with default config path', function 
 
     expect($commandTester->getStatusCode())->toBe(0);
     expect($commandTester->getDisplay())->toContain('Helper file generated');
-    expect(file_exists(testOutputPath()))->toBeTrue();
+    expect(testOutputPath())->toBeFile();
 })->with('intellipestCommand');
 
 test('intellipest command accepts custom config path via option', function (CommandTester $commandTester) {
@@ -54,7 +56,7 @@ test('intellipest command writes to custom output path', function (CommandTester
 
     expect($commandTester->getStatusCode())->toBe(0);
     expect($commandTester->getDisplay())->toContain('Helper file generated');
-    expect(file_exists($outputPath))->toBeTrue();
+    expect($outputPath)->toBeFile();
     expect(file_get_contents($outputPath))->toStartWith('<?php');
 })->with('intellipestCommand');
 
@@ -66,8 +68,8 @@ test('intellipest command creates output directory if it does not exist', functi
     ]);
 
     expect($commandTester->getStatusCode())->toBe(0);
-    expect(is_dir(dirname($outputPath)))->toBeTrue();
-    expect(file_exists($outputPath))->toBeTrue();
+    expect(dirname($outputPath))->toBeDirectory();
+    expect($outputPath)->toBeFile();
 })->with('intellipestCommand');
 
 test('intellipest command fails when output file does not end with .php', function (CommandTester $commandTester) {
@@ -96,7 +98,7 @@ test('intellipest command fails when parent path contains an existing file', fun
     $blockerFile = testOutputDir().'/blockerfile';
 
     if (! is_dir(testOutputDir())) {
-        mkdir(testOutputDir(), 0755, true);
+        mkdir(testOutputDir(), 0o755, true);
     }
 
     file_put_contents($blockerFile, 'blocked');
@@ -119,7 +121,7 @@ test('intellipest command generates helper file with mixin expectations helpers 
     $expectationHelperContent = Stub::render(dirname(__DIR__).'/../stubs/mixin_expectations.stub');
 
     expect($commandTester->getStatusCode())->toBe(0);
-    expect(file_exists(testOutputPath()))->toBeTrue();
+    expect(testOutputPath())->toBeFile();
     expect(file_get_contents(testOutputPath()))->toContain($expectationHelperContent);
 })->with('intellipestCommand');
 
@@ -129,7 +131,7 @@ test('intellipest command generates helper file without mixin expectations helpe
     $expectationHelperContent = Stub::render(dirname(__DIR__).'/../stubs/mixin_expectations.stub');
 
     expect($commandTester->getStatusCode())->toBe(0);
-    expect(file_exists(testOutputPath()))->toBeTrue();
+    expect(testOutputPath())->toBeFile();
     expect(file_get_contents(testOutputPath()))->not()->toContain($expectationHelperContent);
 })->with('intellipestCommand');
 
@@ -163,7 +165,7 @@ test('intellipest command generates file on initial watch run', function (Comman
         '--watch' => true,
     ]);
 
-    expect(file_exists($outputPath))->toBeTrue();
+    expect($outputPath)->toBeFile();
     expect(file_get_contents($outputPath))->toStartWith('<?php');
 })->with('intellipestCommand');
 
