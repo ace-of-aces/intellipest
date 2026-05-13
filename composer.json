@@ -18,7 +18,6 @@
     },
     "require-dev": {
         "pestphp/pest": "^4.3",
-        "laravel/pint": "^1.29",
         "carthage-software/mago": "^1.26.0"
     },
     "autoload": {
