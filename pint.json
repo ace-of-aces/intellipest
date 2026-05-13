@@ -1,6 +1,0 @@
-{
-  "preset": "laravel",
-  "notName": [
-    "HelperResult*.php"
-  ]
-}
