@@ -11,6 +11,8 @@ permissions:
 jobs:
   php-code-styling:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/carthage-software/mago:1.26
     timeout-minutes: 5
 
     steps:
@@ -19,8 +21,8 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - name: Fix PHP code style issues
-        uses: aglipanci/laravel-pint-action@2.6
+      - name: Format code with Mago
+        run: mago fmt
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v7

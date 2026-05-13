@@ -1,0 +1,30 @@
+name: Mago Static Analysis
+
+on:
+  push:
+    paths:
+      - "src/**/*.php"
+      - "mago.toml"
+      - ".github/workflows/static-analysis.yml"
+
+jobs:
+  mago:
+    name: mago
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+          coverage: none
+
+      - name: Install composer dependencies
+        uses: ramsey/composer-install@v4
+
+      - name: Run Mago
+        run: ./vendor/bin/mago analyze --reporting-format=github
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
