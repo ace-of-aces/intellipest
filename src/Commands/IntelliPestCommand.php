@@ -24,8 +24,6 @@ final class IntelliPestCommand extends Command
 
     private const WATCH_INTERVAL_SECONDS = 0.5;
 
-    protected static string $defaultName = 'intellipest';
-
     private int $lastModificationTime = 0;
 
     private string $configPath;
@@ -49,7 +47,7 @@ final class IntelliPestCommand extends Command
                 'c',
                 InputOption::VALUE_REQUIRED,
                 'Path to the Pest.php configuration file',
-                'tests/Pest.php'
+                'tests/Pest.php',
             )
             ->addOption(
                 'output',
@@ -61,19 +59,19 @@ final class IntelliPestCommand extends Command
                 'expectation-helpers',
                 null,
                 InputOption::VALUE_NONE,
-                'Generate helper methods for built-in expectations in the IDE helper file'
+                'Generate helper methods for built-in expectations in the IDE helper file',
             )
             ->addOption(
                 'shush',
                 's',
                 InputOption::VALUE_NONE,
-                'Don\'t show the beautiful header and footer in the console output😔'
+                'Don\'t show the beautiful header and footer in the console output😔',
             )
             ->addOption(
                 'watch',
                 'w',
                 InputOption::VALUE_NONE,
-                'Watch the input configuration file and regenerate on changes'
+                'Watch the input configuration file and regenerate on changes',
             );
     }
 
@@ -136,13 +134,13 @@ final class IntelliPestCommand extends Command
         $this->setup($input);
 
         if (! file_exists($this->configPath)) {
-            $output->writeln("<error>✗ Config file not found: $this->configPath</error>");
+            $output->writeln("<error>✗ Config file not found: {$this->configPath}</error>");
 
             return Command::FAILURE;
         }
 
         if (! str_ends_with($this->outputPath, '.php')) {
-            $output->writeln("<error>✗ Output file must have a .php extension: $this->outputPath</error>");
+            $output->writeln("<error>✗ Output file must have a .php extension: {$this->outputPath}</error>");
 
             return Command::FAILURE;
         }
@@ -169,24 +167,24 @@ final class IntelliPestCommand extends Command
         $invalidSegment = $this->findBlockingFileInPath($directory);
 
         if ($invalidSegment !== null) {
-            $output->writeln("<error>✗ Invalid output path – '$invalidSegment' is not a directory</error>");
+            $output->writeln("<error>✗ Invalid output path – '{$invalidSegment}' is not a directory</error>");
 
             return Command::FAILURE;
         }
 
         $intellipest = new IntelliPest($this->configPath, $this->generateMixinExpectations);
 
-        $output->writeln("<info>∘ Analyzing Pest config: $this->configPath</info>");
+        $output->writeln("<info>∘ Analyzing Pest config: {$this->configPath}</info>");
         $intellipest->analyze();
         $content = $intellipest->generate();
 
         if (! is_dir($directory)) {
-            mkdir($directory, 0755, true);
+            mkdir($directory, 0o755, true);
         }
 
         file_put_contents($this->outputPath, $content);
 
-        $output->writeln("<info>✓ Helper file generated: $this->outputPath</info>");
+        $output->writeln("<info>✓ Helper file generated: {$this->outputPath}</info>");
 
         if ($displayFooter) {
             $this->displayFooter($output);
@@ -200,8 +198,8 @@ final class IntelliPestCommand extends Command
         if (! $this->shush) {
             $output->writeln('');
             $output->writeln('<fg=bright-magenta;options=bold>👀 Watch Mode Enabled</>');
-            $output->writeln("<info>Monitoring: $this->configPath</info>");
-            $output->writeln("<info>Output:     $this->outputPath</info>");
+            $output->writeln("<info>Monitoring: {$this->configPath}</info>");
+            $output->writeln("<info>Output:     {$this->outputPath}</info>");
             $output->writeln('<info>Interval:   '.self::WATCH_INTERVAL_SECONDS.'s</info>');
             $output->writeln('');
             $output->writeln('<comment>Press Ctrl+C to stop watching...</comment>');
@@ -209,6 +207,7 @@ final class IntelliPestCommand extends Command
         }
 
         clearstatcache(true, $this->configPath);
+        // @mago-expect lint:no-shorthand-ternary
         $this->lastModificationTime = filemtime($this->configPath) ?: 0;
         $this->safeGenerateHelper($input, $output);
 
@@ -221,7 +220,7 @@ final class IntelliPestCommand extends Command
             $currentModificationTime = filemtime($this->configPath);
 
             if ($currentModificationTime === false) {
-                $output->writeln("<error>✗ Unable to read modification time for: $this->configPath</error>");
+                $output->writeln("<error>✗ Unable to read modification time for: {$this->configPath}</error>");
 
                 return;
             }
@@ -279,6 +278,7 @@ final class IntelliPestCommand extends Command
 
     private function resolveDefaultOutputPath(): string
     {
+        // @mago-expect lint:no-shorthand-ternary
         $outputDir = getenv('INTELLIPEST_OUTPUT_DIR') ?: self::DEFAULT_OUTPUT_DIR;
 
         return $outputDir.'/'.self::DEFAULT_OUTPUT_FILE;

@@ -3,7 +3,12 @@ name: Fix PHP code style issues
 on:
   push:
     paths:
-      - '**.php'
+      - "**.php"
+      - ".github/workflows/fix-php-code-style-issues.yml"
+  pull_request:
+    paths:
+      - "**.php"
+      - ".github/workflows/fix-php-code-style-issues.yml"
 
 permissions:
   contents: write
@@ -19,10 +24,13 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - name: Fix PHP code style issues
-        uses: aglipanci/laravel-pint-action@2.6
+      - name: Set up Mago
+        uses: nhedger/setup-mago@v1
+
+      - name: Format code with Mago
+        run: mago fmt
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          commit_message: 'style: fix code style issues'
+          commit_message: "style: fix code style issues"

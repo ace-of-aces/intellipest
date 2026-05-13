@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use AceOfAces\IntelliPest\Data\ClassLikeReference;
 use AceOfAces\IntelliPest\Data\ExpectCall;
 use AceOfAces\IntelliPest\Data\PestCall;
@@ -8,10 +10,10 @@ use AceOfAces\IntelliPest\Enums\ClassLikeType;
 use AceOfAces\IntelliPest\IntelliPest;
 
 /*
-|--------------------------------------------------------------------------
-| BasicCase: pest()->extend()->in() + expect()->extend()
-|--------------------------------------------------------------------------
-*/
+ |--------------------------------------------------------------------------
+ | BasicCase: pest()->extend()->in() + expect()->extend()
+ |--------------------------------------------------------------------------
+ */
 
 test('analyze parses pest() call chain from BasicCase fixture', function () {
     $intellipest = new IntelliPest('tests/Fixtures/BasicCase/Pest.php');
@@ -37,7 +39,7 @@ test('analyze parses expect() call chain from BasicCase fixture', function () {
     expect($expectCalls)->toHaveCount(1);
     expect($expectCalls[0])->toBeInstanceOf(ExpectCall::class);
     expect($expectCalls[0]->name)->toBe('toBeOne');
-    expect($expectCalls[0]->parameters)->toBe([]);
+    expect($expectCalls[0]->parameters)->toBeEmpty();
     expect($expectCalls[0]->returnType)->toBeNull();
 });
 
@@ -49,10 +51,10 @@ test('analyze produces no uses() calls from BasicCase fixture', function () {
 });
 
 /*
-|--------------------------------------------------------------------------
-| LegacyUsesCase: uses()->in() + expect()->extend()
-|--------------------------------------------------------------------------
-*/
+ |--------------------------------------------------------------------------
+ | LegacyUsesCase: uses()->in() + expect()->extend()
+ |--------------------------------------------------------------------------
+ */
 
 test('analyze parses legacy uses() call chain', function () {
     $intellipest = new IntelliPest('tests/Fixtures/LegacyUsesCase/Pest.php');
@@ -81,7 +83,7 @@ test('analyze parses expect() from LegacyUsesCase fixture', function () {
 
     expect($expectCalls)->toHaveCount(1);
     expect($expectCalls[0]->name)->toBe('toBeEmail');
-    expect($expectCalls[0]->parameters)->toBe([]);
+    expect($expectCalls[0]->parameters)->toBeEmpty();
     expect($expectCalls[0]->returnType)->toBeNull();
 });
 
@@ -93,10 +95,10 @@ test('analyze produces no pest() calls from LegacyUsesCase fixture', function ()
 });
 
 /*
-|--------------------------------------------------------------------------
-| ComplexCase: multiple pest() chains + multiple expect() extensions
-|--------------------------------------------------------------------------
-*/
+ |--------------------------------------------------------------------------
+ | ComplexCase: multiple pest() chains + multiple expect() extensions
+ |--------------------------------------------------------------------------
+ */
 
 test('analyze parses multiple pest() call chains', function () {
     $intellipest = new IntelliPest('tests/Fixtures/ComplexCase/Pest.php');
@@ -132,11 +134,11 @@ test('analyze parses multiple expect() extensions', function () {
     expect($expectCalls)->toHaveCount(9);
 
     expect($expectCalls[0]->name)->toBe('toBePositive');
-    expect($expectCalls[0]->parameters)->toBe([]);
+    expect($expectCalls[0]->parameters)->toBeEmpty();
     expect($expectCalls[0]->returnType)->toBeNull();
 
     expect($expectCalls[1]->name)->toBe('toBeEmail');
-    expect($expectCalls[1]->parameters)->toBe([]);
+    expect($expectCalls[1]->parameters)->toBeEmpty();
     expect($expectCalls[1]->returnType)->toBeNull();
 
     expect($expectCalls[2]->name)->toBe('toHaveLength');
@@ -144,7 +146,7 @@ test('analyze parses multiple expect() extensions', function () {
     expect($expectCalls[2]->returnType)->toBeNull();
 
     expect($expectCalls[3]->name)->toBe('toEqualFoo');
-    expect($expectCalls[3]->parameters)->toBe([]);
+    expect($expectCalls[3]->parameters)->toBeEmpty();
     expect($expectCalls[3]->returnType)->toBe('bool');
 
     expect($expectCalls[4]->name)->toBe('toContainValues');

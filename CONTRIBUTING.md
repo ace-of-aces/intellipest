@@ -46,9 +46,15 @@ Run the test suite:
 composer test
 ```
 
+### Linting
+Run Mago lint:
+```bash
+composer lint
+```
+
 ### Static Analysis
 
-Run PHPStan:
+Run Mago analyze:
 ```bash
 composer analyze
 ```

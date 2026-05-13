@@ -8,6 +8,7 @@ use AceOfAces\IntelliPest\Data\PestConfig;
 use AceOfAces\IntelliPest\Data\TestCaseExtension;
 use AceOfAces\IntelliPest\Enums\ClassLikeType;
 use AceOfAces\IntelliPest\Visitors\PestConfigVisitor;
+use PhpParser\ErrorHandler\Collecting;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\ParserFactory;
@@ -18,7 +19,7 @@ final class IntelliPest
 
     public function __construct(
         public string $configPath = 'tests/Pest.php',
-        public bool $generateMixinExpectations = false
+        public bool $generateMixinExpectations = false,
     ) {}
 
     public function analyze(): void
@@ -31,10 +32,14 @@ final class IntelliPest
 
         $parser = (new ParserFactory)->createForHostVersion();
 
-        try {
-            $ast = $parser->parse($code);
-        } catch (\Error $error) {
-            throw new \RuntimeException("Failed to parse config file: {$error->getMessage()}");
+        $errorHandler = new Collecting;
+
+        $ast = $parser->parse($code, $errorHandler);
+
+        if ($errorHandler->hasErrors()) {
+            $errors = $errorHandler->getErrors();
+            $messages = array_map(static fn ($e) => $e->getMessage(), $errors);
+            throw new \RuntimeException('Failed to parse config file: '.implode('; ', $messages));
         }
 
         if ($ast === null) {
@@ -49,7 +54,6 @@ final class IntelliPest
         $traverser->traverse($ast);
 
         $this->visitor = $visitor;
-
     }
 
     /**
@@ -95,10 +99,17 @@ final class IntelliPest
                         );
                         $pendingTraits = [];
                     }
+
                     $pendingTestCase = $ref->name;
-                } elseif ($ref->type === ClassLikeType::Trait_) {
-                    $pendingTraits[] = $ref->name;
+
+                    continue;
                 }
+
+                if ($ref->type !== ClassLikeType::Trait_) {
+                    continue;
+                }
+
+                $pendingTraits[] = $ref->name;
             }
 
             // Finalize the last pending extension for this call
@@ -108,10 +119,16 @@ final class IntelliPest
                     traits: $pendingTraits,
                     directory: $call->in,
                 );
-            } elseif (count($pendingTraits) > 0) {
-                // Traits without an associated class become default traits
-                $defaultTestCaseTraits = array_merge($defaultTestCaseTraits, $pendingTraits);
+
+                continue;
             }
+
+            if (count($pendingTraits) === 0) {
+                continue;
+            }
+
+            // Traits without an associated class become default traits
+            $defaultTestCaseTraits = array_merge($defaultTestCaseTraits, $pendingTraits);
         }
 
         return new PestConfig(

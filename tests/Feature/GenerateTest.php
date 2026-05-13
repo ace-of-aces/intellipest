@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use AceOfAces\IntelliPest\IntelliPest;
 use Tests\Support\Fixtures;
 

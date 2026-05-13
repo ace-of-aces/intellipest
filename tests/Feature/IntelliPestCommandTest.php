@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use AceOfAces\IntelliPest\Commands\IntelliPestCommand;
 use AceOfAces\IntelliPest\Support\Stub;
 use Symfony\Component\Console\Application;
@@ -16,7 +18,7 @@ dataset('intellipestCommand', [
 ]);
 
 afterEach(function () {
-    cleanDirectory(testOutputDir());
+    clean_directory(test_output_dir());
 });
 
 test('intellipest command runs successfully with default config path', function (CommandTester $commandTester) {
@@ -24,7 +26,7 @@ test('intellipest command runs successfully with default config path', function 
 
     expect($commandTester->getStatusCode())->toBe(0);
     expect($commandTester->getDisplay())->toContain('Helper file generated');
-    expect(file_exists(testOutputPath()))->toBeTrue();
+    expect(test_output_path())->toBeFile();
 })->with('intellipestCommand');
 
 test('intellipest command accepts custom config path via option', function (CommandTester $commandTester) {
@@ -46,7 +48,7 @@ test('intellipest command fails when config file does not exist', function (Comm
 })->with('intellipestCommand');
 
 test('intellipest command writes to custom output path', function (CommandTester $commandTester) {
-    $outputPath = testOutputDir().'/custom/_my-pest-helper.php';
+    $outputPath = test_output_dir().'/custom/_my-pest-helper.php';
 
     $commandTester->execute([
         '--output' => $outputPath,
@@ -54,24 +56,24 @@ test('intellipest command writes to custom output path', function (CommandTester
 
     expect($commandTester->getStatusCode())->toBe(0);
     expect($commandTester->getDisplay())->toContain('Helper file generated');
-    expect(file_exists($outputPath))->toBeTrue();
+    expect($outputPath)->toBeFile();
     expect(file_get_contents($outputPath))->toStartWith('<?php');
 })->with('intellipestCommand');
 
 test('intellipest command creates output directory if it does not exist', function (CommandTester $commandTester) {
-    $outputPath = testOutputDir().'/nested/deep/_pest-helper.php';
+    $outputPath = test_output_dir().'/nested/deep/_pest-helper.php';
 
     $commandTester->execute([
         '--output' => $outputPath,
     ]);
 
     expect($commandTester->getStatusCode())->toBe(0);
-    expect(is_dir(dirname($outputPath)))->toBeTrue();
-    expect(file_exists($outputPath))->toBeTrue();
+    expect(dirname($outputPath))->toBeDirectory();
+    expect($outputPath)->toBeFile();
 })->with('intellipestCommand');
 
 test('intellipest command fails when output file does not end with .php', function (CommandTester $commandTester) {
-    $outputPath = testOutputDir().'/helper.txt';
+    $outputPath = test_output_dir().'/helper.txt';
 
     $commandTester->execute([
         '--output' => $outputPath,
@@ -82,7 +84,7 @@ test('intellipest command fails when output file does not end with .php', functi
 })->with('intellipestCommand');
 
 test('intellipest command fails when output file has no extension', function (CommandTester $commandTester) {
-    $outputPath = testOutputDir().'/helper';
+    $outputPath = test_output_dir().'/helper';
 
     $commandTester->execute([
         '--output' => $outputPath,
@@ -93,10 +95,10 @@ test('intellipest command fails when output file has no extension', function (Co
 })->with('intellipestCommand');
 
 test('intellipest command fails when parent path contains an existing file', function (CommandTester $commandTester) {
-    $blockerFile = testOutputDir().'/blockerfile';
+    $blockerFile = test_output_dir().'/blockerfile';
 
-    if (! is_dir(testOutputDir())) {
-        mkdir(testOutputDir(), 0755, true);
+    if (! is_dir(test_output_dir())) {
+        mkdir(test_output_dir(), 0o755, true);
     }
 
     file_put_contents($blockerFile, 'blocked');
@@ -119,8 +121,8 @@ test('intellipest command generates helper file with mixin expectations helpers 
     $expectationHelperContent = Stub::render(dirname(__DIR__).'/../stubs/mixin_expectations.stub');
 
     expect($commandTester->getStatusCode())->toBe(0);
-    expect(file_exists(testOutputPath()))->toBeTrue();
-    expect(file_get_contents(testOutputPath()))->toContain($expectationHelperContent);
+    expect(test_output_path())->toBeFile();
+    expect(file_get_contents(test_output_path()))->toContain($expectationHelperContent);
 })->with('intellipestCommand');
 
 test('intellipest command generates helper file without mixin expectations helpers by default', function (CommandTester $commandTester) {
@@ -129,8 +131,8 @@ test('intellipest command generates helper file without mixin expectations helpe
     $expectationHelperContent = Stub::render(dirname(__DIR__).'/../stubs/mixin_expectations.stub');
 
     expect($commandTester->getStatusCode())->toBe(0);
-    expect(file_exists(testOutputPath()))->toBeTrue();
-    expect(file_get_contents(testOutputPath()))->not()->toContain($expectationHelperContent);
+    expect(test_output_path())->toBeFile();
+    expect(file_get_contents(test_output_path()))->not()->toContain($expectationHelperContent);
 })->with('intellipestCommand');
 
 test('intellipest command displays simple header on narrow terminals', function (CommandTester $commandTester) {
@@ -155,7 +157,7 @@ test('intellipest command displays ASCII art header on wide terminals', function
 test('intellipest command generates file on initial watch run', function (CommandTester $commandTester) {
     putenv('INTELLIPEST_WATCH_TEST_MODE=1');
     $configPath = __DIR__.'/../Fixtures/BasicCase/Pest.php';
-    $outputPath = testOutputDir().'/watch-test-helper.php';
+    $outputPath = test_output_dir().'/watch-test-helper.php';
 
     $commandTester->execute([
         '--config' => $configPath,
@@ -163,14 +165,14 @@ test('intellipest command generates file on initial watch run', function (Comman
         '--watch' => true,
     ]);
 
-    expect(file_exists($outputPath))->toBeTrue();
+    expect($outputPath)->toBeFile();
     expect(file_get_contents($outputPath))->toStartWith('<?php');
 })->with('intellipestCommand');
 
 test('intellipest command displays watch mode info when enabled', function (CommandTester $commandTester) {
     putenv('INTELLIPEST_WATCH_TEST_MODE=1');
     $configPath = __DIR__.'/../Fixtures/BasicCase/Pest.php';
-    $outputPath = testOutputDir().'/watch-info-helper.php';
+    $outputPath = test_output_dir().'/watch-info-helper.php';
 
     $commandTester->execute([
         '--config' => $configPath,
@@ -186,7 +188,7 @@ test('intellipest command displays watch mode info when enabled', function (Comm
 test('intellipest command suppresses watch mode info with --shush', function (CommandTester $commandTester) {
     putenv('INTELLIPEST_WATCH_TEST_MODE=1');
     $configPath = __DIR__.'/../Fixtures/BasicCase/Pest.php';
-    $outputPath = testOutputDir().'/watch-shush-helper.php';
+    $outputPath = test_output_dir().'/watch-shush-helper.php';
 
     $commandTester->execute([
         '--config' => $configPath,

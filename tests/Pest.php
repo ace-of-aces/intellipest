@@ -1,56 +1,56 @@
 <?php
 
+declare(strict_types=1);
+
 use Tests\TestCase;
 
 /*
-|--------------------------------------------------------------------------
-| Test Case
-|--------------------------------------------------------------------------
-|
-| The closure you provide to your test functions is always bound to a specific PHPUnit test
-| case class. By default, that class is "PHPUnit\Framework\TestCase". Of course, you may
-| need to change it using the "pest()" function to bind a different classes or traits.
-|
-*/
+ |--------------------------------------------------------------------------
+ | Test Case
+ |--------------------------------------------------------------------------
+ |
+ | The closure you provide to your test functions is always bound to a specific PHPUnit test
+ | case class. By default, that class is "PHPUnit\Framework\TestCase". Of course, you may
+ | need to change it using the "pest()" function to bind a different classes or traits.
+ |
+ */
 
 pest()->extend(TestCase::class)->in('Feature');
 
 /*
-|--------------------------------------------------------------------------
-| Expectations
-|--------------------------------------------------------------------------
-|
-| When you're writing tests, you often need to check that values meet certain conditions. The
-| "expect()" function gives you access to a set of "expectations" methods that you can use
-| to assert different things. Of course, you may extend the Expectation API at any time.
-|
-*/
+ |--------------------------------------------------------------------------
+ | Expectations
+ |--------------------------------------------------------------------------
+ |
+ | When you're writing tests, you often need to check that values meet certain conditions. The
+ | "expect()" function gives you access to a set of "expectations" methods that you can use
+ | to assert different things. Of course, you may extend the Expectation API at any time.
+ |
+ */
 
-expect()->extend('toBeOne', function () {
-    return $this->toBe(1);
-});
+expect()->extend('toBeOne', fn () => $this->toBe(1));
 
 /*
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| While Pest is very powerful out-of-the-box, you may have some testing code specific to your
-| project that you don't want to repeat in every file. Here you can also expose helpers as
-| global functions to help you to reduce the number of lines of code in your test files.
-|
-*/
+ |--------------------------------------------------------------------------
+ | Functions
+ |--------------------------------------------------------------------------
+ |
+ | While Pest is very powerful out-of-the-box, you may have some testing code specific to your
+ | project that you don't want to repeat in every file. Here you can also expose helpers as
+ | global functions to help you to reduce the number of lines of code in your test files.
+ |
+ */
 
 /*
-|--------------------------------------------------------------------------
-| Test Output Directory
-|--------------------------------------------------------------------------
-|
-| During tests the IntelliPestCommand should never write into the real
-| project tree. We set INTELLIPEST_OUTPUT_DIR to a temporary directory
-| so the command's default output path is automatically redirected.
-|
-*/
+ |--------------------------------------------------------------------------
+ | Test Output Directory
+ |--------------------------------------------------------------------------
+ |
+ | During tests the IntelliPestCommand should never write into the real
+ | project tree. We set INTELLIPEST_OUTPUT_DIR to a temporary directory
+ | so the command's default output path is automatically redirected.
+ |
+ */
 
 $intellipestTestOutputDir = sys_get_temp_dir().'/intellipest-test-'.getmypid();
 putenv("INTELLIPEST_OUTPUT_DIR={$intellipestTestOutputDir}");
@@ -58,7 +58,7 @@ putenv("INTELLIPEST_OUTPUT_DIR={$intellipestTestOutputDir}");
 /**
  * Return the temporary output directory used by the IntelliPestCommand during tests.
  */
-function testOutputDir(): string
+function test_output_dir(): string
 {
     return getenv('INTELLIPEST_OUTPUT_DIR');
 }
@@ -66,15 +66,15 @@ function testOutputDir(): string
 /**
  * Return the full path to the temporary IDE helper file written during tests.
  */
-function testOutputPath(): string
+function test_output_path(): string
 {
-    return testOutputDir().'/_pest-helper.php';
+    return test_output_dir().'/_pest-helper.php';
 }
 
 /**
  * Recursively remove a directory and all its contents.
  */
-function cleanDirectory(string $path): void
+function clean_directory(string $path): void
 {
     if (! is_dir($path)) {
         return;
