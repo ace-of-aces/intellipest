@@ -2,6 +2,19 @@
 
 All notable changes to `IntelliPest` will be documented in this file.
 
+## v1.0.1 - 2026-05-13
+
+This release moves PHP tooling away from Laravel Pint & PHPStan to [Mago](https://github.com/carthage-software/mago).
+This involved some code refactors and development setup changes, but no actual behaviour should be affected by this.
+See details in https://github.com/ace-of-aces/intellipest/pull/11.
+
+### What's Changed
+
+* Move PHP Tooling to Mago by @ace-of-aces in https://github.com/ace-of-aces/intellipest/pull/11
+* chore(deps): bump pnpm/action-setup from 6 to 6.0.7 by @dependabot[bot] in https://github.com/ace-of-aces/intellipest/pull/10
+
+**Full Changelog**: https://github.com/ace-of-aces/intellipest/compare/v1.0.0...1.0.1
+
 ## v1.0.0 🎉 - 2026-05-09
 
 Finally tagging this as stable :)
