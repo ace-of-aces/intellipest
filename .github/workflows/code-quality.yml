@@ -11,8 +11,6 @@ jobs:
   mago:
     name: mago
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/carthage-software/mago:1.26.0
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v6
@@ -27,11 +25,14 @@ jobs:
         uses: ramsey/composer-install@v4
         with:
           composer-options: "--prefer-dist --no-interaction"
+      
+      - name: Set up Mago
+        uses: nhedger/setup-mago@v1
 
       - name: Mago Lint
         if: success() || failure()
-        run: mago lint --reporting-format=github
+        run: mago lint
 
       - name: Mago Static Analysis
         if: success() || failure()
-        run: mago analyze --reporting-format=github
+        run: mago analyze
