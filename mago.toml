@@ -20,11 +20,17 @@ excludes = [
 
 [linter]
 integrations = ["symfony", "laravel", "pest"]
+excludes = [
+  "tests/Fixtures/**/*.php",
+]
 
 [linter.rules]
 ambiguous-function-call = { enabled = false }
 literal-named-argument = { enabled = false }
 halstead = { effort-threshold = 7000 }
+too-many-methods = { threshold = 12 }
+no-empty-comment = { enabled = false}
+no-boolean-flag-parameter = { enabled = false}
 
 [analyzer]
 plugins = []

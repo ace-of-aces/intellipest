@@ -19,7 +19,6 @@
     "require-dev": {
         "pestphp/pest": "^4.3",
         "laravel/pint": "^1.29",
-        "phpstan/phpstan": "^2.1",
         "carthage-software/mago": "^1.26.0"
     },
     "autoload": {
@@ -41,11 +40,13 @@
         }
     },
     "scripts": {
-        "lint": "mago fmt --check",
-        "format": "mago fmt",
-        "test": "pest",
         "analyze": "mago analyze",
+        "format": "mago fmt",
+        "format:check": "mago fmt --check",
+        "lint": "mago lint",
+        "test": "pest",
         "test:all": [
+            "@format:check",
             "@lint",
             "@test",
             "@analyze"
