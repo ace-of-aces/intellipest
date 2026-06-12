@@ -33,7 +33,7 @@ jobs:
           composer-options: "--prefer-dist --no-interaction"
 
       - name: Set up Mago
-        uses: nhedger/setup-mago@b1b8f89862e133daf595f9ec95c7193c36ccfc14 # v1.0.0
+        uses: nhedger/setup-mago@473d3a2bfe0b32a62c8b910059d7f03a16519f2e # v2.0.0
 
       - name: Mago Lint
         if: success() || failure()
